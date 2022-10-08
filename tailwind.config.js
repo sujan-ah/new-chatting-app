@@ -11,6 +11,10 @@ module.exports = {
         primary: "#5F35F5",
         blue: "#03014C",
       },
+      screens: {
+        sm: "375px",
+        sml: "415px",
+      },
     },
   },
   plugins: [],

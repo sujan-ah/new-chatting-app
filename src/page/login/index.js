@@ -22,7 +22,7 @@ const Login = () => {
 
               <div className="relative mt-14">
                 <input
-                  className="border-b border-solid border-purpal w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-14 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className="border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="email"
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px]  bg-white opacity-90 ">
@@ -31,7 +31,11 @@ const Login = () => {
               </div>
 
               <div className="relative mt-14">
-                <input className="border-b border-solid border-purpal w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-14 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0" />
+                <input
+                  className="border-b border-solid border-purpal w-full  py-7 sml:py-4  xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  type="password"
+                />
+
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] bg-white  opacity-90">
                   Password
                 </p>

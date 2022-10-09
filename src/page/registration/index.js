@@ -17,7 +17,7 @@ const Registration = () => {
             <div className="xl:w-2/3">
               <div className="relative mt-8 xl:mt-14">
                 <input
-                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-14 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="email"
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90 ">
@@ -27,7 +27,7 @@ const Registration = () => {
 
               <div className="relative mt-8 xl:mt-14">
                 <input
-                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-14 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="text"
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90">
@@ -37,7 +37,7 @@ const Registration = () => {
 
               <div className="relative mt-8 xl:mt-14">
                 <input
-                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-14 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="password"
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90">

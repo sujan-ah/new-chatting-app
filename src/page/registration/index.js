@@ -1,7 +1,68 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 
 const Registration = () => {
+  let [email, setEmail] = useState("");
+  let [name, setName] = useState("");
+  let [password, setPassword] = useState("");
+  let [emailerr, setEmailerr] = useState("");
+  let [nameerr, setNameerr] = useState("");
+  let [passworderr, setPassworderr] = useState("");
+  let [eyeopen, setEyeopen] = useState(false);
+
+  let handleEmail = (e) => {
+    setEmail(e.target.value);
+    setEmailerr("");
+  };
+  let handleName = (e) => {
+    setName(e.target.value);
+    setNameerr("");
+  };
+  let handlePassword = (e) => {
+    setPassword(e.target.value);
+    setPassworderr("");
+  };
+
+  let handleEye = () => {
+    setEyeopen(!eyeopen);
+  };
+
+  let handleRegistration = () => {
+    if (!email) {
+      setEmailerr("Email is required");
+    } else {
+      if (
+        !email
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        setEmailerr("Please give valid email");
+      }
+    }
+    if (!name) {
+      setNameerr("Fullname is required");
+    } else {
+      if (name.length <= 2)
+        setNameerr("Fullname must be more than 2 character");
+    }
+    if (!password) {
+      setPassworderr("Password is required");
+    } else if (!password.match(/^(?=.*[a-z])/)) {
+      setPassworderr("Password must contain lowercase character");
+    } else if (!password.match(/^(?=.*[A-Z])/)) {
+      setPassworderr("Password must contain uppercase character");
+    } else if (!password.match(/^(?=.*[0-9])/)) {
+      setPassworderr("Password must contain numeric character");
+    } else if (!password.match(/^(?=.*[!@#$%^&*])/)) {
+      setPassworderr("Password must contain symbol");
+    } else if (!password.match(/^(?=.{8,})/)) {
+      setPassworderr("Password must be at least 8 character");
+    }
+  };
+
   return (
     <div>
       <div className="flex">
@@ -19,33 +80,66 @@ const Registration = () => {
                 <input
                   className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="email"
+                  onChange={handleEmail}
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90 ">
                   Email Address
                 </p>
               </div>
+              {emailerr && (
+                <p className="bg-rose-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
+                  {emailerr}
+                </p>
+              )}
 
               <div className="relative mt-8 xl:mt-14">
                 <input
                   className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="text"
+                  onChange={handleName}
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90">
                   Full name
                 </p>
               </div>
+              {nameerr && (
+                <p className="bg-rose-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
+                  {nameerr}
+                </p>
+              )}
 
               <div className="relative mt-8 xl:mt-14">
                 <input
                   className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
-                  type="password"
+                  type={eyeopen ? "text" : "password"}
+                  onChange={handlePassword}
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90">
                   Password
                 </p>
+                {eyeopen ? (
+                  <FiEye
+                    onClick={handleEye}
+                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                  />
+                ) : (
+                  <FiEyeOff
+                    onClick={handleEye}
+                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                  />
+                )}
               </div>
 
-              <button className="w-full h-auto bg-primary p-6 sml:p-4 rounded-full mt-8 xl:mt-12">
+              {passworderr && (
+                <p className="bg-rose-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
+                  {passworderr}
+                </p>
+              )}
+
+              <button
+                className="w-full h-auto bg-primary p-6 sml:p-4 rounded-full mt-8 xl:mt-12"
+                onClick={handleRegistration}
+              >
                 <p className="font-nunito font-semibold text-white text-xl sml:text-base md:!text-xl">
                   Sign up
                 </p>

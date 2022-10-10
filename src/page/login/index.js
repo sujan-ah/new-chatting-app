@@ -1,8 +1,57 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 
 const Login = () => {
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [emailErr, setEmailErr] = useState("");
+  let [passwordErr, setPasswordErr] = useState("");
+  let [eyeopen, setEyeopen] = useState(false);
+
+  let handleEmail = (e) => {
+    setEmail(e.target.value);
+    setEmailErr("");
+  };
+  let handlePassword = (e) => {
+    setPassword(e.target.value);
+    setPasswordErr("");
+  };
+
+  let handleEye = () => {
+    setEyeopen(!eyeopen);
+  };
+
+  let handleLogin = () => {
+    if (!email) {
+      setEmailErr("Email is required");
+    } else {
+      if (
+        !email
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        setEmailErr("Please give a valid email");
+      }
+    }
+    if (!password) {
+      setPasswordErr("Password is required");
+    } else if (!password.match(/^(?=.*[a-z])/)) {
+      setPasswordErr("Password must contain lowercase");
+    } else if (!password.match(/^(?=.*[A-Z])/)) {
+      setPasswordErr("Password must contain uppercase");
+    } else if (!password.match(/^(?=.*[0-9])/)) {
+      setPasswordErr("Password must contain numeric ");
+    } else if (!password.match(/^(?=.*[!@#$%^&*])/)) {
+      setPasswordErr("Password must contain symbol");
+    } else if (!password.match(/^(?=.{8,})/)) {
+      setPasswordErr("Password must be 8 character");
+    }
+  };
+
   return (
     <div>
       <div className="flex">
@@ -24,24 +73,51 @@ const Login = () => {
                 <input
                   className="border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   type="email"
+                  onChange={handleEmail}
                 />
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px]  bg-white opacity-90 ">
                   Email Address
                 </p>
               </div>
+              {emailErr && (
+                <p className="bg-rose-600 px-4 py-4 rounded-lg mt-2 text-white font-nunito font-semibold text-xl">
+                  {emailErr}
+                </p>
+              )}
 
               <div className="relative mt-14">
                 <input
                   className="border-b border-solid border-purpal w-full  py-7 sml:py-4  xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
-                  type="password"
+                  type={eyeopen ? "text" : "password"}
+                  onChange={handlePassword}
                 />
-
                 <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] bg-white  opacity-90">
                   Password
                 </p>
+
+                {eyeopen ? (
+                  <FiEye
+                    onClick={handleEye}
+                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                  />
+                ) : (
+                  <FiEyeOff
+                    onClick={handleEye}
+                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                  />
+                )}
               </div>
 
-              <button className="w-full h-auto bg-primary p-6 rounded-lg mt-12">
+              {passwordErr && (
+                <p className="bg-rose-600 px-4 py-4 rounded-lg mt-2 text-white font-nunito font-semibold text-xl">
+                  {passwordErr}
+                </p>
+              )}
+
+              <button
+                className="w-full h-auto bg-primary p-6 rounded-lg mt-12"
+                onClick={handleLogin}
+              >
                 <p className="font-nunito font-semibold text-white text-xl">
                   Login to Continue
                 </p>

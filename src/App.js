@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Registration from "./page/registration/index";
 import Login from "./page/login/index";
 import Home from "./page/home/index";
+import Message from "./page/message";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<Home />}></Route>
       <Route path="/registration" element={<Registration />}></Route>
       <Route path="/login" element={<Login />}></Route>
+      <Route path="/message" element={<Message />}></Route>
     </Routes>
   );
 }

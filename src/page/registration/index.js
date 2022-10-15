@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FiEyeOff, FiEye } from "react-icons/fi";
 import {
   getAuth,
@@ -7,8 +7,11 @@ import {
   sendEmailVerification,
   updateProfile,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { RotatingLines } from "react-loader-spinner";
 
 const Registration = () => {
+  const navigate = useNavigate();
   const auth = getAuth();
   let [email, setEmail] = useState("");
   let [name, setName] = useState("");
@@ -18,6 +21,8 @@ const Registration = () => {
   let [passworderr, setPassworderr] = useState("");
   let [eyeopen, setEyeopen] = useState(false);
   let [err, setErr] = useState(false);
+  let [success, setSuccess] = useState(false);
+  let [loader, setLoader] = useState(false);
 
   let handleEmail = (e) => {
     setEmail(e.target.value);
@@ -81,6 +86,7 @@ const Registration = () => {
         password
       )
     ) {
+      setLoader(true);
       createUserWithEmailAndPassword(auth, email, password)
         .then((user) => {
           updateProfile(auth.currentUser, {
@@ -89,8 +95,14 @@ const Registration = () => {
           })
             .then(() => {
               console.log(user);
+              setLoader(false);
               sendEmailVerification(auth.currentUser).then(() => {
-                console.log(user);
+                setSuccess(
+                  "Registration Successfull. Please Varify Your Email Address"
+                );
+                setTimeout(() => {
+                  navigate("/login");
+                }, 2000);
               });
             })
             .catch((error) => {
@@ -123,6 +135,11 @@ const Registration = () => {
               {err && (
                 <p className="bg-rose-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
                   {err}
+                </p>
+              )}
+              {success && (
+                <p className="bg-green-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
+                  {success}
                 </p>
               )}
               <div className="relative mt-8 xl:mt-14">
@@ -185,14 +202,26 @@ const Registration = () => {
                 </p>
               )}
 
-              <button
-                className="w-full h-auto bg-primary p-6 sml:p-4 rounded-full mt-8 xl:mt-12"
-                onClick={handleRegistration}
-              >
-                <p className="font-nunito font-semibold text-white text-xl sml:text-base md:!text-xl">
-                  Sign up
-                </p>
-              </button>
+              {loader ? (
+                <div className="ml-40	mt-5">
+                  <RotatingLines
+                    strokeColor="grey"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    width="70"
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                <button
+                  className="w-full h-auto bg-primary p-6 sml:p-4 rounded-full mt-8 xl:mt-12"
+                  onClick={handleRegistration}
+                >
+                  <p className="font-nunito font-semibold text-white text-xl sml:text-base md:!text-xl">
+                    Sign up
+                  </p>
+                </button>
+              )}
 
               <p className=" font-semibold text-center mt-5 xl:mt-9 text-blue text-sm lg:text-base">
                 Already have an account ?

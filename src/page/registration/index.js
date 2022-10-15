@@ -83,10 +83,19 @@ const Registration = () => {
     ) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((user) => {
-          console.log("registration done");
-          sendEmailVerification(auth.currentUser).then(() => {
-            console.log(user);
-          });
+          updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: "images/profile.jpg",
+          })
+            .then(() => {
+              console.log(user);
+              sendEmailVerification(auth.currentUser).then(() => {
+                console.log(user);
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;

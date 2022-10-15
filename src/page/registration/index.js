@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiEyeOff, FiEye } from "react-icons/fi";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 
 const Registration = () => {
+  const auth = getAuth();
   let [email, setEmail] = useState("");
   let [name, setName] = useState("");
   let [password, setPassword] = useState("");
@@ -10,10 +17,12 @@ const Registration = () => {
   let [nameerr, setNameerr] = useState("");
   let [passworderr, setPassworderr] = useState("");
   let [eyeopen, setEyeopen] = useState(false);
+  let [err, setErr] = useState(false);
 
   let handleEmail = (e) => {
     setEmail(e.target.value);
     setEmailerr("");
+    setErr("");
   };
   let handleName = (e) => {
     setName(e.target.value);
@@ -61,6 +70,32 @@ const Registration = () => {
     } else if (!password.match(/^(?=.{8,})/)) {
       setPassworderr("Password must be at least 8 character");
     }
+    if (
+      email &&
+      password &&
+      name &&
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      ) &&
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(
+        password
+      )
+    ) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+          console.log("registration done");
+          sendEmailVerification(auth.currentUser).then(() => {
+            console.log(user);
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode.includes("email")) {
+            setErr("Email Already in Use");
+          }
+        });
+    }
   };
 
   return (
@@ -76,6 +111,11 @@ const Registration = () => {
             </p>
 
             <div className="xl:w-2/3">
+              {err && (
+                <p className="bg-rose-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
+                  {err}
+                </p>
+              )}
               <div className="relative mt-8 xl:mt-14">
                 <input
                   className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"

@@ -9,6 +9,8 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -21,7 +23,6 @@ const Registration = () => {
   let [passworderr, setPassworderr] = useState("");
   let [eyeopen, setEyeopen] = useState(false);
   let [err, setErr] = useState(false);
-  let [success, setSuccess] = useState(false);
   let [loader, setLoader] = useState(false);
 
   let handleEmail = (e) => {
@@ -84,9 +85,13 @@ const Registration = () => {
       ) &&
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(
         password
-      )
+      ) &&
+      name.length > 2
     ) {
       setLoader(true);
+      toast.success(
+        "Registration Successfull. Please Varify Your Email Address"
+      );
       createUserWithEmailAndPassword(auth, email, password)
         .then((user) => {
           updateProfile(auth.currentUser, {
@@ -95,12 +100,10 @@ const Registration = () => {
           })
             .then(() => {
               console.log(user);
-              setLoader(false);
+
               sendEmailVerification(auth.currentUser).then(() => {
-                setSuccess(
-                  "Registration Successfull. Please Varify Your Email Address"
-                );
                 setTimeout(() => {
+                  setLoader(false);
                   navigate("/login");
                 }, 2000);
               });
@@ -123,6 +126,7 @@ const Registration = () => {
   return (
     <div>
       <div className="flex">
+        <ToastContainer position="top-left" theme="dark" />
         <div className="sml:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
           <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
             <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start">
@@ -136,11 +140,6 @@ const Registration = () => {
               {err && (
                 <p className="bg-rose-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
                   {err}
-                </p>
-              )}
-              {success && (
-                <p className="bg-green-600 rounded-lg px-4 py-3 mt-2 text-white font-nunito font-semibold text-lg">
-                  {success}
                 </p>
               )}
               <div className="relative mt-8 xl:mt-14">

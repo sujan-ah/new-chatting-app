@@ -2,7 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FiEyeOff, FiEye } from "react-icons/fi";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const navigate = useNavigate();
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [eyeopen, setEyeopen] = useState(false);
@@ -53,6 +59,12 @@ const Login = () => {
       });
   };
 
+  let handleGoogleLogin = () => {
+    signInWithPopup(auth, provider).then(() => {
+      navigate("/");
+    });
+  };
+
   return (
     <div>
       <div className="flex">
@@ -69,7 +81,10 @@ const Login = () => {
             </h2>
 
             <div className="xl:w-2/3">
-              <button className="xl:w-3/5 h-auto flex border px-8 py-5 rounded-lg xl:mt-10 mt-5  ml-auto mr-auto sml:ml-0 sml:mr-0">
+              <button
+                onClick={handleGoogleLogin}
+                className="xl:w-3/5 h-auto flex border px-8 py-5 rounded-lg xl:mt-10 mt-5  ml-auto mr-auto sml:ml-0 sml:mr-0"
+              >
                 <FcGoogle className="text-2xl" />
                 <p className="font-nunito font-bold text-blue text-sm ml-2.5 mt-[2px]">
                   Login with Google

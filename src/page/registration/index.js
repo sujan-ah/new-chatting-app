@@ -89,9 +89,7 @@ const Registration = () => {
       name.length > 2
     ) {
       setLoader(true);
-      toast.success(
-        "Registration Successfull. Please Varify Your Email Address"
-      );
+
       createUserWithEmailAndPassword(auth, email, password)
         .then((user) => {
           updateProfile(auth.currentUser, {
@@ -102,6 +100,9 @@ const Registration = () => {
               console.log(user);
 
               sendEmailVerification(auth.currentUser).then(() => {
+                toast.success(
+                  "Registration Successfull. Please Varify Your Email Address"
+                );
                 setTimeout(() => {
                   setLoader(false);
                   navigate("/login");

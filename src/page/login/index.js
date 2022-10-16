@@ -2,21 +2,28 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FiEyeOff, FiEye } from "react-icons/fi";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { RotatingLines } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
-  let [emailErr, setEmailErr] = useState("");
-  let [passwordErr, setPasswordErr] = useState("");
   let [eyeopen, setEyeopen] = useState(false);
+  let [err, setErr] = useState("");
+  let [loader, setLoader] = useState(false);
 
   let handleEmail = (e) => {
     setEmail(e.target.value);
-    setEmailErr("");
+    setErr("");
   };
   let handlePassword = (e) => {
     setPassword(e.target.value);
-    setPasswordErr("");
+    setErr("");
   };
 
   let handleEye = () => {
@@ -24,40 +31,40 @@ const Login = () => {
   };
 
   let handleLogin = () => {
-    if (!email) {
-      setEmailErr("Email is required");
-    } else {
-      if (
-        !email
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )
-      ) {
-        setEmailErr("Please give a valid email");
-      }
-    }
-    if (!password) {
-      setPasswordErr("Password is required");
-    } else if (!password.match(/^(?=.*[a-z])/)) {
-      setPasswordErr("Password must contain lowercase");
-    } else if (!password.match(/^(?=.*[A-Z])/)) {
-      setPasswordErr("Password must contain uppercase");
-    } else if (!password.match(/^(?=.*[0-9])/)) {
-      setPasswordErr("Password must contain numeric ");
-    } else if (!password.match(/^(?=.*[!@#$%^&*])/)) {
-      setPasswordErr("Password must contain symbol");
-    } else if (!password.match(/^(?=.{8,})/)) {
-      setPasswordErr("Password must be 8 character");
-    }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        setLoader(true);
+        toast.success("Login Successfull! Wait for redirect");
+
+        setTimeout(() => {
+          setLoader(false);
+          navigate("/");
+        }, 2000);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode.includes("auth/invalid-email")) {
+          setErr("Email not match");
+        }
+        if (errorCode.includes("auth/wrong-password")) {
+          setErr("Password not match");
+        }
+      });
   };
 
   return (
     <div>
       <div className="flex">
+        <ToastContainer position="top-left" theme="dark" />
         <div className="sml:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
           <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
-            <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start">
+            {err && (
+              <p className="bg-rose-600 px-4 py-2 rounded-lg mt-2 text-white font-nunito font-semibold text-xl text-center xl:w-2/3">
+                {err}
+              </p>
+            )}
+            <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start mt-5">
               Login to your account!
             </h2>
 
@@ -79,11 +86,6 @@ const Login = () => {
                   Email Address
                 </p>
               </div>
-              {emailErr && (
-                <p className="bg-rose-600 px-4 py-4 rounded-lg mt-2 text-white font-nunito font-semibold text-xl">
-                  {emailErr}
-                </p>
-              )}
 
               <div className="relative mt-14">
                 <input
@@ -108,20 +110,26 @@ const Login = () => {
                 )}
               </div>
 
-              {passwordErr && (
-                <p className="bg-rose-600 px-4 py-4 rounded-lg mt-2 text-white font-nunito font-semibold text-xl">
-                  {passwordErr}
-                </p>
+              {loader ? (
+                <div className="ml-40	mt-5">
+                  <RotatingLines
+                    strokeColor="grey"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    width="70"
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                <button
+                  className="w-full h-auto bg-primary p-6 rounded-lg mt-12"
+                  onClick={handleLogin}
+                >
+                  <p className="font-nunito font-semibold text-white text-xl">
+                    Login to Continue
+                  </p>
+                </button>
               )}
-
-              <button
-                className="w-full h-auto bg-primary p-6 rounded-lg mt-12"
-                onClick={handleLogin}
-              >
-                <p className="font-nunito font-semibold text-white text-xl">
-                  Login to Continue
-                </p>
-              </button>
 
               <p className="px-5 font-semibold  mt-9 text-blue">
                 Don’t have an account ?

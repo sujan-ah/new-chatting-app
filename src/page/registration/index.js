@@ -114,6 +114,7 @@ const Registration = () => {
           const errorMessage = error.message;
           if (errorCode.includes("email")) {
             setErr("Email Already in Use");
+            setLoader(false);
           }
         });
     }

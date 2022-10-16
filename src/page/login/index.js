@@ -153,6 +153,13 @@ const Login = () => {
                   Sign Up
                 </Link>
               </p>
+
+              <p className="px-5 font-semibold mt-9 text-center">
+                <Link to="/forgotpassword" className="text-primary font-bold">
+                  {" "}
+                  Forgot Password
+                </Link>
+              </p>
             </div>
           </div>
         </div>

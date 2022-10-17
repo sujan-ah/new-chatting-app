@@ -4,8 +4,19 @@ import { TbMessageCircle } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineSetting } from "react-icons/ai";
 import { HiOutlineLogout } from "react-icons/hi";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ active }) => {
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  let handleLogout = () => {
+    signOut(auth).then(() => {
+      navigate("/login");
+    });
+  };
+
   return (
     <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-full ml-[-12px] xl:ml-0">
       <img
@@ -45,7 +56,10 @@ const Sidebar = ({ active }) => {
 
         <IoMdNotificationsOutline className="text-3xl xl:text-5xl text-white" />
         <AiOutlineSetting className="text-3xl xl:text-5xl text-white " />
-        <HiOutlineLogout className="text-3xl xl:text-5xl text-white xl:mt-32" />
+        <HiOutlineLogout
+          onClick={handleLogout}
+          className="text-3xl xl:text-5xl text-white xl:mt-32"
+        />
       </div>
     </div>
   );

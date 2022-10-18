@@ -20,9 +20,12 @@ const Sidebar = ({ active }) => {
   return (
     <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-full ml-[-12px] xl:ml-0">
       <img
-        src="images/profileimg.png"
+        src={auth.currentUser.photoURL}
         className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]"
       />
+      <h1 className="text-center text-2xl text-white font-nunito font-bold mt-2 leading-6	">
+        {auth.currentUser.displayName}
+      </h1>
       <div className="flex xl:flex-col items-center gap-x-5 xl:gap-x-0 gap-y-16  xl:mt-20 xl:mb-20 ml-5 xl:ml-0">
         <div
           className={`${

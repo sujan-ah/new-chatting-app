@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const UserList = () => {
+  const auth = getAuth();
+  console.log(auth);
   const db = getDatabase();
   const [userlist, setUserlist] = useState([]);
 
@@ -10,11 +13,12 @@ const UserList = () => {
     onValue(usersRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val());
+        if (item.key !== auth.currentUser.uid) arr.push(item.val());
       });
       setUserlist(arr);
     });
   }, []);
+
   return (
     <div className=" rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">User List</h1>
@@ -34,7 +38,7 @@ const UserList = () => {
           </div>
           <div>
             <p className="bg-primary text-white font-nunito font-bold text-lg rounded p-1	">
-              Accept
+              Send Request
             </p>
           </div>
         </div>

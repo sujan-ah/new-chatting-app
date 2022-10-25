@@ -4,6 +4,7 @@ import { TbMessageCircle } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineSetting } from "react-icons/ai";
 import { HiOutlineLogout } from "react-icons/hi";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -19,10 +20,16 @@ const Sidebar = ({ active }) => {
 
   return (
     <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-full ml-[-12px] xl:ml-0">
-      <img
-        src={auth.currentUser.photoURL}
-        className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]"
-      />
+      <div className="relative overflow-hidden w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%] group ">
+        <img
+          src={auth.currentUser.photoURL}
+          className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]"
+        />
+        <div className="w-[50px] h-[50px] bg-primary flex justify-center items-center absolute bottom-0 right-0 hidden group-hover:flex">
+          <AiOutlineCloudUpload className="text-white text-2xl" />
+        </div>
+      </div>
+
       <h1 className="text-center text-2xl text-white font-nunito font-bold mt-2 leading-6	">
         {auth.currentUser.displayName}
       </h1>

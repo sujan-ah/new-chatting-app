@@ -11,8 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getDatabase, ref, set } from "firebase/database";
 
 const Registration = () => {
+  const db = getDatabase();
   const navigate = useNavigate();
   const auth = getAuth();
   let [email, setEmail] = useState("");
@@ -97,17 +99,30 @@ const Registration = () => {
             photoURL: "images/profile.jpg",
           })
             .then(() => {
-              console.log(user);
+              console.log(user.user.displayName);
 
-              sendEmailVerification(auth.currentUser).then(() => {
-                toast.success(
-                  "Registration Successfull. Please Varify Your Email Address"
-                );
-                setTimeout(() => {
-                  setLoader(false);
-                  navigate("/login");
-                }, 2000);
-              });
+              sendEmailVerification(auth.currentUser)
+                .then(() => {
+                  toast.success(
+                    "Registration Successfull. Please Varify Your Email Address"
+                  );
+                })
+                .then(() => {
+                  set(ref(db, "users/" + user.user.uid), {
+                    username: user.user.displayName,
+                    email: user.user.email,
+                    profile_picture: user.user.photoURL,
+                  })
+                    .then(() => {
+                      setTimeout(() => {
+                        setLoader(false);
+                        navigate("/login");
+                      }, 2000);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                });
             })
             .catch((error) => {
               console.log(error);

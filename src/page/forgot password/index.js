@@ -46,10 +46,7 @@ const ForgotPassword = () => {
               Password Change
             </p>
           </button>
-          <button
-            className="w-32 h-auto bg-amber-600	 p-6 rounded-lg mt-12"
-            //   onClick={handleLogin}
-          >
+          <button className="w-32 h-auto bg-amber-600	 p-6 rounded-lg mt-12">
             <p className="font-nunito font-semibold text-white text-xl">
               <Link to="/login" className="text-white font-bold ">
                 {" "}

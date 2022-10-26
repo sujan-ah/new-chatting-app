@@ -6,6 +6,7 @@ import Login from "./page/login/index";
 import Home from "./page/home/index";
 import Message from "./page/message";
 import ForgotPassword from "./page/forgot password";
+import Imgupload from "./components/Imgupload";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/message" element={<Message />}></Route>
       <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+      <Route path="/imgupload" element={<Imgupload />}></Route>
     </Routes>
   );
 }

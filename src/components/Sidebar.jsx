@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineHome } from "react-icons/md";
 import { TbMessageCircle } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -7,8 +7,10 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ active }) => {
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -16,6 +18,9 @@ const Sidebar = ({ active }) => {
     signOut(auth).then(() => {
       navigate("/login");
     });
+  };
+  let handleImgModalshow = () => {
+    navigate("/imgupload");
   };
 
   return (
@@ -25,7 +30,10 @@ const Sidebar = ({ active }) => {
           src={auth.currentUser.photoURL}
           className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]"
         />
-        <div className="w-[50px] h-[50px] bg-primary flex justify-center items-center absolute bottom-0 right-0 hidden group-hover:flex">
+        <div
+          className="w-[50px] h-[50px] bg-primary flex justify-center items-center absolute bottom-0 right-0 hidden group-hover:flex"
+          onClick={handleImgModalshow}
+        >
           <AiOutlineCloudUpload className="text-white text-2xl" />
         </div>
       </div>

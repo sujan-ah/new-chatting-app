@@ -1,16 +1,27 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { getAuth } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
+import { RotatingLines } from "react-loader-spinner";
 
 const Imgupload = () => {
+  const navigate = useNavigate();
   const auth = getAuth();
   let [img, setImg] = useState("");
+  let [imgname, setImgname] = useState("");
   let [viewimg, setViewimg] = useState("");
+  const [cropper, setCropper] = useState();
+  const [loader, setLoader] = useState(false);
 
   let handleChange = (e) => {
-    console.log(e.target.files[0]);
+    setImgname(e.target.files[0].name);
 
     let files;
     if (e.dataTransfer) {
@@ -30,6 +41,32 @@ const Imgupload = () => {
     const imageElement = cropperRef?.current;
     const cropper = imageElement?.cropper;
     setViewimg(cropper.getCroppedCanvas().toDataURL());
+  };
+
+  let handleUpload = () => {
+    setLoader(true);
+    const storage = getStorage();
+    const storageRef = ref(storage, imgname);
+    console.log(viewimg);
+    if (typeof cropper !== "undefined") {
+      // setCropData(cropper.getCroppedCanvas().toDataURL());
+      const message4 = cropper.getCroppedCanvas().toDataURL();
+      uploadString(storageRef, message4, "data_url").then((snapshot) => {
+        getDownloadURL(storageRef).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          updateProfile(auth.currentUser, {
+            photoURL: downloadURL,
+          })
+            .then(() => {
+              setLoader(false);
+              navigate("/");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      });
+    }
   };
 
   return (
@@ -72,24 +109,44 @@ const Imgupload = () => {
             guides={false}
             crop={onCrop}
             ref={cropperRef}
+            onInitialized={(instance) => {
+              setCropper(instance);
+            }}
           />
         )}
 
         <div className="flex justify-between">
-          <button className="w-44 h-auto bg-primary p-6 rounded-lg mt-12">
-            <p className="font-nunito font-semibold text-white text-xl">
-              Upload Image
-            </p>
-          </button>
+          {loader ? (
+            <div className="mt-12 ml-36">
+              <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="96"
+                visible={true}
+              />
+            </div>
+          ) : (
+            <>
+              <button
+                className="w-44 h-auto bg-primary p-6 rounded-lg mt-12"
+                onClick={handleUpload}
+              >
+                <p className="font-nunito font-semibold text-white text-xl">
+                  Upload Image
+                </p>
+              </button>
 
-          <button className="w-40 h-auto bg-amber-600	 p-6 rounded-lg mt-12">
-            <p className="font-nunito font-semibold text-white text-xl">
-              <Link to="/" className="text-white font-bold ">
-                {" "}
-                Cancel
-              </Link>
-            </p>
-          </button>
+              <button className="w-40 h-auto bg-amber-600	 p-6 rounded-lg mt-12">
+                <p className="font-nunito font-semibold text-white text-xl">
+                  <Link to="/" className="text-white font-bold ">
+                    {" "}
+                    Cancel
+                  </Link>
+                </p>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

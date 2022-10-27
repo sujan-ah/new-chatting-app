@@ -14,7 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  let [varify, setVarify] = useState(false);
+  let [varify, setVarify] = useState(true);
 
   useEffect(() => {
     console.log(auth.currentUser);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const UserList = () => {
   const auth = getAuth();
-  console.log(auth);
+  console.log(auth.currentUser);
   const db = getDatabase();
   const [userlist, setUserlist] = useState([]);
 
@@ -13,11 +13,22 @@ const UserList = () => {
     onValue(usersRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (item.key !== auth.currentUser.uid) arr.push(item.val());
+        if (item.key !== auth.currentUser.uid)
+          arr.push({ ...item.val(), id: item.key });
       });
       setUserlist(arr);
     });
   }, []);
+
+  let handleSendFrequest = (item) => {
+    console.log(item);
+    set(push(ref(db, "friendrequest")), {
+      senderId: auth.currentUser.uid,
+      sendername: auth.currentUser.displayName,
+      receiverid: item.id,
+      receivername: item.username,
+    });
+  };
 
   return (
     <div className=" rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
@@ -37,7 +48,10 @@ const UserList = () => {
             </p>
           </div>
           <div>
-            <p className="bg-primary text-white font-nunito font-bold text-lg rounded p-1	">
+            <p
+              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+              onClick={() => handleSendFrequest(item)}
+            >
               Send Request
             </p>
           </div>

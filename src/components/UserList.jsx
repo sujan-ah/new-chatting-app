@@ -4,9 +4,10 @@ import { getAuth } from "firebase/auth";
 
 const UserList = () => {
   const auth = getAuth();
-  console.log(auth.currentUser);
+  // console.log(auth.currentUser);
   const db = getDatabase();
   const [userlist, setUserlist] = useState([]);
+  const [friend, setFriend] = useState([]);
 
   useEffect(() => {
     const usersRef = ref(db, "users/");
@@ -17,6 +18,17 @@ const UserList = () => {
           arr.push({ ...item.val(), id: item.key });
       });
       setUserlist(arr);
+    });
+  }, []);
+
+  useEffect(() => {
+    const usersRef = ref(db, "friendrequest/");
+    onValue(usersRef, (snapshot) => {
+      let friendarr = [];
+      snapshot.forEach((item) => {
+        friendarr.push(item.val().receiverid + item.val().senderId);
+      });
+      setFriend(friendarr);
     });
   }, []);
 
@@ -48,12 +60,20 @@ const UserList = () => {
             </p>
           </div>
           <div>
-            <p
-              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
-              onClick={() => handleSendFrequest(item)}
-            >
-              Send Request
-            </p>
+            {friend.includes(
+              item.id + auth.currentUser.uid || auth.currentUser.uid + item.id
+            ) ? (
+              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                Pending
+              </button>
+            ) : (
+              <button
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                onClick={() => handleSendFrequest(item)}
+              >
+                Send Request
+              </button>
+            )}
           </div>
         </div>
       ))}

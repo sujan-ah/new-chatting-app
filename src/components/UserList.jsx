@@ -8,6 +8,9 @@ const UserList = () => {
   const db = getDatabase();
   const [userlist, setUserlist] = useState([]);
   const [friend, setFriend] = useState([]);
+  console.log(friend);
+  const [friendList, setFriendList] = useState([]);
+  console.log(friendList);
 
   useEffect(() => {
     const usersRef = ref(db, "users/");
@@ -24,11 +27,22 @@ const UserList = () => {
   useEffect(() => {
     const usersRef = ref(db, "friendrequest/");
     onValue(usersRef, (snapshot) => {
+      let friendreqarr = [];
+      snapshot.forEach((item) => {
+        friendreqarr.push(item.val().receiverid + item.val().senderId);
+      });
+      setFriend(friendreqarr);
+    });
+  }, []);
+
+  useEffect(() => {
+    const usersRef = ref(db, "friends/");
+    onValue(usersRef, (snapshot) => {
       let friendarr = [];
       snapshot.forEach((item) => {
         friendarr.push(item.val().receiverid + item.val().senderId);
       });
-      setFriend(friendarr);
+      setFriendList(friendarr);
     });
   }, []);
 
@@ -60,9 +74,13 @@ const UserList = () => {
             </p>
           </div>
           <div>
-            {friend.includes(
-              item.id + auth.currentUser.uid || auth.currentUser.uid + item.id
-            ) ? (
+            {friendList.includes(item.id + auth.currentUser.uid) ||
+            friendList.includes(auth.currentUser.uid + item.id) ? (
+              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                Friend
+              </button>
+            ) : friend.includes(item.id + auth.currentUser.uid) ||
+              friend.includes(auth.currentUser.uid + item.id) ? (
               <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
                 Pending
               </button>

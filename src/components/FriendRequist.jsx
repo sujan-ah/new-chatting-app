@@ -11,10 +11,8 @@ import { getAuth } from "firebase/auth";
 
 const FriendRequist = () => {
   const auth = getAuth();
-  console.log(auth.currentUser);
   const db = getDatabase();
   const [friendreqshow, setFriendreqshow] = useState([]);
-  console.log(friendreqshow);
 
   useEffect(() => {
     const usersRef = ref(db, "friendrequest/");
@@ -25,7 +23,6 @@ const FriendRequist = () => {
           arr.push({ ...item.val(), id: item.key });
         }
       });
-      console.log(arr);
       setFriendreqshow(arr);
     });
   }, []);

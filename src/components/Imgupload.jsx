@@ -84,7 +84,7 @@ const Imgupload = () => {
             />
           ) : (
             <img
-              src={auth.currentUser.photoURL}
+              src={auth.currentUser && auth.currentUser.photoURL}
               className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]  mb-5 ml-32"
             />
           )}

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const FriendRequist = () => {
@@ -15,13 +22,29 @@ const FriendRequist = () => {
       let arr = [];
       snapshot.forEach((item) => {
         if (auth.currentUser.uid == item.val().receiverid) {
-          arr.push(item.val());
+          arr.push({ ...item.val(), id: item.key });
         }
       });
       console.log(arr);
       setFriendreqshow(arr);
     });
   }, []);
+
+  let handleAcceptFriendRequest = (item) => {
+    console.log(item);
+    set(push(ref(db, "friends")), {
+      id: item.id,
+      senderId: item.senderId,
+      sendername: item.sendername,
+      receiverid: item.receiverid,
+      receivername: item.receivername,
+      date: `${new Date().getDate()} / ${
+        new Date().getMonth() + 1
+      }  / ${new Date().getFullYear()}`,
+    }).then(() => {
+      remove(ref(db, "friendrequest/" + item.id));
+    });
+  };
 
   return (
     <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
@@ -43,9 +66,12 @@ const FriendRequist = () => {
             </p>
           </div>
           <div>
-            <p className="bg-primary text-white font-nunito font-bold text-lg rounded p-1	">
+            <button
+              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+              onClick={() => handleAcceptFriendRequest(item)}
+            >
               Accept
-            </p>
+            </button>
           </div>
         </div>
       ))}

@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-  push,
-  remove,
-} from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const Friends = () => {
   const auth = getAuth();
   const db = getDatabase();
   const [friends, setFriends] = useState([]);
-  console.log(friends);
 
   useEffect(() => {
     const usersRef = ref(db, "friends/");

@@ -4,13 +4,10 @@ import { getAuth } from "firebase/auth";
 
 const UserList = () => {
   const auth = getAuth();
-  // console.log(auth.currentUser);
   const db = getDatabase();
   const [userlist, setUserlist] = useState([]);
   const [friend, setFriend] = useState([]);
-  console.log(friend);
   const [friendList, setFriendList] = useState([]);
-  console.log(friendList);
 
   useEffect(() => {
     const usersRef = ref(db, "users/");

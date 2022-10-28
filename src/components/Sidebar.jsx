@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { MdOutlineHome } from "react-icons/md";
 import { TbMessageCircle } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -7,10 +6,8 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 const Sidebar = ({ active }) => {
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -27,7 +24,7 @@ const Sidebar = ({ active }) => {
     <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-full ml-[-12px] xl:ml-0">
       <div className="relative overflow-hidden w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%] group ">
         <img
-          src={auth.currentUser.photoURL}
+          src={auth.currentUser && auth.currentUser.photoURL}
           className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]"
         />
         <div
@@ -39,7 +36,7 @@ const Sidebar = ({ active }) => {
       </div>
 
       <h1 className="text-center text-2xl text-white font-nunito font-bold mt-2 leading-6	">
-        {auth.currentUser.displayName}
+        {auth.currentUser && auth.currentUser.displayName}
       </h1>
       <div className="flex xl:flex-col items-center gap-x-5 xl:gap-x-0 gap-y-16  xl:mt-20 xl:mb-20 ml-5 xl:ml-0">
         <div

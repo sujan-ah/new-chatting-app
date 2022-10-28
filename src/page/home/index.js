@@ -13,15 +13,15 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const auth = getAuth();
+  console.log(auth.currentUser);
 
-  let [varify, setVarify] = useState(true);
+  let [varify, setVarify] = useState(false);
 
   useEffect(() => {
-    console.log(auth.currentUser);
     if (!auth.currentUser) {
       navigate("/login");
     } else {
-      if (auth.currentUser.emailVerified) {
+      if (auth.currentUser && auth.currentUser.emailVerified) {
         setVarify(true);
       }
     }

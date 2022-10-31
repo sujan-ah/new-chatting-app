@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const Friends = () => {
@@ -16,12 +23,33 @@ const Friends = () => {
           auth.currentUser.uid == item.val().receiverid ||
           auth.currentUser.uid == item.val().senderId
         ) {
-          arr.push(item.val());
+          arr.push({ ...item.val(), key: item.key });
         }
       });
       setFriends(arr);
     });
   }, []);
+
+  let handleBlock = (item) => {
+    console.log(item);
+    auth.currentUser.uid == item.senderId
+      ? set(push(ref(db, "blockfriends/")), {
+          block: item.receivername,
+          blockId: item.receiverid,
+          blockBy: item.sendername,
+          blockById: item.senderId,
+        }).then(() => {
+          remove(ref(db, "friends/" + item.key));
+        })
+      : set(push(ref(db, "blockfriends/")), {
+          block: item.sendername,
+          blockId: item.senderId,
+          blockBy: item.receivername,
+          blockById: item.receiverid,
+        }).then(() => {
+          remove(ref(db, "friends/" + item.key));
+        });
+  };
 
   return (
     <div className="rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
@@ -49,6 +77,12 @@ const Friends = () => {
               Today, 8:56pm
             </p>
           </div>
+          <button
+            className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+            onClick={() => handleBlock(item)}
+          >
+            Block
+          </button>
         </div>
       ))}
     </div>

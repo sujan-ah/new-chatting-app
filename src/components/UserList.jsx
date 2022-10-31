@@ -8,6 +8,7 @@ const UserList = () => {
   const [userlist, setUserlist] = useState([]);
   const [friend, setFriend] = useState([]);
   const [friendList, setFriendList] = useState([]);
+  const [blockList, setBlockList] = useState([]);
 
   useEffect(() => {
     const usersRef = ref(db, "users/");
@@ -40,6 +41,18 @@ const UserList = () => {
         friendarr.push(item.val().receiverid + item.val().senderId);
       });
       setFriendList(friendarr);
+    });
+  }, []);
+
+  useEffect(() => {
+    const usersRef = ref(db, "blockfriends/");
+    onValue(usersRef, (snapshot) => {
+      let blockarr = [];
+      snapshot.forEach((item) => {
+        console.log(item.val());
+        blockarr.push(item.val().blockId + item.val().blockById);
+      });
+      setBlockList(blockarr);
     });
   }, []);
 
@@ -80,6 +93,11 @@ const UserList = () => {
               friend.includes(auth.currentUser.uid + item.id) ? (
               <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
                 Pending
+              </button>
+            ) : blockList.includes(item.id + auth.currentUser.uid) ||
+              blockList.includes(auth.currentUser.uid + item.id) ? (
+              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                Blocked
               </button>
             ) : (
               <button

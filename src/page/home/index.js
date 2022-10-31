@@ -13,9 +13,8 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const auth = getAuth();
-  console.log(auth.currentUser);
 
-  let [varify, setVarify] = useState(false);
+  let [varify, setVarify] = useState(true);
 
   useEffect(() => {
     if (!auth.currentUser) {

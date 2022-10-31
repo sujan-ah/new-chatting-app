@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const BlockedUsers = () => {
@@ -23,13 +30,29 @@ const BlockedUsers = () => {
           arr.push({
             id: item.key,
             block: item.val().blockBy,
-            blockid: item.val().blockById,
+            blockById: item.val().blockById,
           });
         }
       });
       setBlockfriends(arr);
     });
   }, []);
+
+  let handleUnblock = (item) => {
+    console.log(item);
+    // set(push(ref(db, "friends")), {
+    //   id: item.id,
+    //   senderId: item.senderId,
+    //   sendername: item.sendername,
+    //   receiverid: auth.currentUser.uid,
+    //   receivername: auth.currentUser.displayName,
+    //   date: `${new Date().getDate()} / ${
+    //     new Date().getMonth() + 1
+    //   }  / ${new Date().getFullYear()}`,
+    // }).then(() => {
+    //   remove(ref(db, "friendrequest/" + item.id));
+    // });
+  };
 
   return (
     <div className="mt-11 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
@@ -49,8 +72,11 @@ const BlockedUsers = () => {
             </p>
           </div>
           <div>
-            {item.blockById == auth.currentUser.uid && (
-              <p className="bg-primary text-white font-nunito font-bold text-lg rounded p-1	">
+            {!item.blockById && (
+              <p
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1	"
+                onClick={() => handleUnblock(item)}
+              >
                 Unblock
               </p>
             )}

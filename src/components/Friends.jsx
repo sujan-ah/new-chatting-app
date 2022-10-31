@@ -34,6 +34,7 @@ const Friends = () => {
     console.log(item);
     auth.currentUser.uid == item.senderId
       ? set(push(ref(db, "blockfriends/")), {
+          id: item.key,
           block: item.receivername,
           blockId: item.receiverid,
           blockBy: item.sendername,
@@ -42,6 +43,7 @@ const Friends = () => {
           remove(ref(db, "friends/" + item.key));
         })
       : set(push(ref(db, "blockfriends/")), {
+          id: item.key,
           block: item.sendername,
           blockId: item.senderId,
           blockBy: item.receivername,

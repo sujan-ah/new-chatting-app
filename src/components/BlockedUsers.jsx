@@ -40,18 +40,18 @@ const BlockedUsers = () => {
 
   let handleUnblock = (item) => {
     console.log(item);
-    // set(push(ref(db, "friends")), {
-    //   id: item.id,
-    //   senderId: item.senderId,
-    //   sendername: item.sendername,
-    //   receiverid: auth.currentUser.uid,
-    //   receivername: auth.currentUser.displayName,
-    //   date: `${new Date().getDate()} / ${
-    //     new Date().getMonth() + 1
-    //   }  / ${new Date().getFullYear()}`,
-    // }).then(() => {
-    //   remove(ref(db, "friendrequest/" + item.id));
-    // });
+    set(push(ref(db, "friends")), {
+      id: item.id,
+      senderId: item.blockid,
+      sendername: item.block,
+      receiverid: auth.currentUser.uid,
+      receivername: auth.currentUser.displayName,
+      date: `${new Date().getDate()} / ${
+        new Date().getMonth() + 1
+      }  / ${new Date().getFullYear()}`,
+    }).then(() => {
+      remove(ref(db, "blockfriends/" + item.id));
+    });
   };
 
   return (

@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { getDatabase, ref, onValue, remove } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  remove,
+  set,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 
@@ -42,8 +49,22 @@ const MyGroups = () => {
   };
 
   let handleMemberReject = (item) => {
-    console.log(item.key);
     remove(ref(db, "groupjoinreq/" + item.key));
+  };
+
+  let handleAcceptMember = (item) => {
+    set(push(ref(db, "groupmember")), {
+      gid: item.gid,
+      groupadminid: item.groupadminid,
+      groupname: item.groupname,
+      grouptag: item.grouptag,
+      key: item.key,
+      userid: item.userid,
+      username: item.username,
+      userprofile: item.userprofile,
+    }).then(() => {
+      remove(ref(db, "groupjoinreq/" + item.key));
+    });
   };
 
   return (
@@ -75,7 +96,10 @@ const MyGroups = () => {
               </div>
 
               <div>
-                <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                <button
+                  className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                  onClick={() => handleAcceptMember(item)}
+                >
                   Accept
                 </button>
               </div>

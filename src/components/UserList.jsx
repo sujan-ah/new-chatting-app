@@ -49,7 +49,6 @@ const UserList = () => {
     onValue(usersRef, (snapshot) => {
       let blockarr = [];
       snapshot.forEach((item) => {
-        console.log(item.val());
         blockarr.push(item.val().blockId + item.val().blockById);
       });
       setBlockList(blockarr);

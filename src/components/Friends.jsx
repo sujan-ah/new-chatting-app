@@ -31,7 +31,6 @@ const Friends = () => {
   }, []);
 
   let handleBlock = (item) => {
-    console.log(item);
     auth.currentUser.uid == item.senderId
       ? set(push(ref(db, "blockfriends/")), {
           id: item.key,

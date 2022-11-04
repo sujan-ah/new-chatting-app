@@ -19,7 +19,6 @@ const BlockedUsers = () => {
     onValue(usersRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        console.log(item.val());
         if (auth.currentUser.uid == item.val().blockById) {
           arr.push({
             id: item.key,
@@ -39,7 +38,6 @@ const BlockedUsers = () => {
   }, []);
 
   let handleUnblock = (item) => {
-    console.log(item);
     set(push(ref(db, "friends")), {
       id: item.id,
       senderId: item.blockid,

@@ -17,6 +17,8 @@ const MyGroups = () => {
   let [grouplist, setGrouplist] = useState("");
   let [showinfo, setShowinfo] = useState(false);
   let [memberreq, setMemberreq] = useState([]);
+  let [memberlist, setMemberlist] = useState([]);
+  let [showmember, setShowmember] = useState(false);
 
   useEffect(() => {
     const groupRef = ref(db, "Group/");
@@ -67,6 +69,20 @@ const MyGroups = () => {
     });
   };
 
+  let handleMember = (member) => {
+    setShowmember(true);
+    const groupRef = ref(db, "groupmember/");
+    onValue(groupRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (member.gid == item.val().gid) {
+          arr.push(item.val());
+        }
+      });
+      setMemberlist(arr);
+    });
+  };
+
   return (
     <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">My Groups</h1>
@@ -114,6 +130,36 @@ const MyGroups = () => {
             </div>
           ))}
         </>
+      ) : showmember ? (
+        <>
+          <button
+            className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+            onClick={() => setShowmember(!showmember)}
+          >
+            Back
+          </button>
+          {memberlist.map((item) => (
+            <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
+              <div>
+                <img
+                  src={item.userprofile}
+                  className="w-16 h-16 rounded-[50%]"
+                />
+              </div>
+              <div>
+                <h1 className="font-nunito font-bold text-base">
+                  {item.username}{" "}
+                </h1>
+                <p className="font-nunito font-semibold text-sm opacity-60">
+                  {item.grouptag}
+                </p>
+              </div>
+              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                Remove
+              </button>
+            </div>
+          ))}
+        </>
       ) : (
         grouplist &&
         grouplist.map((item) => (
@@ -142,7 +188,10 @@ const MyGroups = () => {
               </button>
             </div>
             <div>
-              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+              <button
+                onClick={() => handleMember(item)}
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+              >
                 Members
               </button>
             </div>

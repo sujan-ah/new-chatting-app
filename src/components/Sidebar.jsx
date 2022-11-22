@@ -5,7 +5,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { HiOutlineLogout } from "react-icons/hi";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ active }) => {
   const navigate = useNavigate();
@@ -45,13 +45,15 @@ const Sidebar = ({ active }) => {
             "relative z-10 after:absolute after:top-0 after:left-0 after:content-[''] after:bg-white xl:after:w-[243%] after:h-full  after:z-[-1] xl:px-11 xl:py-5 after:rounded-3xl before:absolute before:top-0 before:right-[-34px] before:content-[''] xl:before:bg-primary xl:before:w-[15%] before:h-full before:rounded-3xl before:drop-shadow-2xl"
           }`}
         >
-          <MdOutlineHome
-            className={`${
-              active == "home"
-                ? "text-3xl xl:text-5xl text-white xl:text-primary"
-                : "text-3xl xl:text-5xl text-white"
-            }`}
-          />
+          <Link to="/">
+            <MdOutlineHome
+              className={`${
+                active == "home"
+                  ? "text-3xl xl:text-5xl text-white xl:text-primary"
+                  : "text-3xl xl:text-5xl text-white"
+              }`}
+            />
+          </Link>
         </div>
 
         <div
@@ -60,13 +62,15 @@ const Sidebar = ({ active }) => {
             "relative z-10 after:absolute after:top-0 after:left-0 after:content-[''] after:bg-white after:w-[243%] after:h-full  after:z-[-1] px-11 py-5 after:rounded-3xl before:absolute before:top-0 before:right-[-34px] before:content-[''] before:bg-primary before:w-[15%] before:h-full before:rounded-3xl before:drop-shadow-2xl"
           }`}
         >
-          <TbMessageCircle
-            className={`${
-              active == "message"
-                ? "text-3xl xl:text-5xl text-black"
-                : "text-3xl  xl:text-5xl text-white"
-            }`}
-          />
+          <Link to="/message">
+            <TbMessageCircle
+              className={`${
+                active == "message"
+                  ? "text-3xl xl:text-5xl text-black"
+                  : "text-3xl  xl:text-5xl text-white"
+              }`}
+            />
+          </Link>
         </div>
 
         <IoMdNotificationsOutline className="text-3xl xl:text-5xl text-white" />

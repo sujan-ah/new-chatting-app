@@ -1,15 +1,19 @@
 import React from "react";
+import Friends from "../../components/Friends";
+import JoinGroupList from "../../components/JoinGroupList";
 import Sidebar from "../../components/Sidebar";
 
 const Message = () => {
   return (
-    <div className="flex">
+    <div className="flex justify-between">
       <div className="max-w-[186px]">
         <Sidebar active="message" />
       </div>
-      <div className="max-w-[427px]"></div>
-      <div className="max-w-[344px]"></div>
-      <div className="max-w-[344px]"></div>
+      <div className="w-[427px] mt-10">
+        <JoinGroupList />
+        <Friends />
+      </div>
+      <div className="w-[1235px] mt-10"></div>
     </div>
   );
 };

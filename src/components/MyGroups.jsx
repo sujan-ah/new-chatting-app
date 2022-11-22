@@ -76,11 +76,15 @@ const MyGroups = () => {
       let arr = [];
       snapshot.forEach((item) => {
         if (member.gid == item.val().gid) {
-          arr.push(item.val());
+          arr.push({ ...item.val(), key: item.key });
         }
       });
       setMemberlist(arr);
     });
+  };
+
+  let handleMemberRemove = (item) => {
+    remove(ref(db, "groupmember/" + item.key));
   };
 
   return (
@@ -154,7 +158,10 @@ const MyGroups = () => {
                   {item.grouptag}
                 </p>
               </div>
-              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+              <button
+                onClick={() => handleMemberRemove(item)}
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+              >
                 Remove
               </button>
             </div>

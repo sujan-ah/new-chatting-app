@@ -8,8 +8,9 @@ import {
   remove,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { TbMessageCircle } from "react-icons/tb";
 
-const Friends = () => {
+const Friends = (props) => {
   const auth = getAuth();
   const db = getDatabase();
   const [friends, setFriends] = useState([]);
@@ -78,12 +79,19 @@ const Friends = () => {
               Today, 8:56pm
             </p>
           </div>
-          <button
-            className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
-            onClick={() => handleBlock(item)}
-          >
-            Block
-          </button>
+
+          {props.block ? (
+            <button
+              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+              onClick={() => handleBlock(item)}
+            >
+              Block
+            </button>
+          ) : (
+            <button className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1">
+              <TbMessageCircle />
+            </button>
+          )}
         </div>
       ))}
     </div>

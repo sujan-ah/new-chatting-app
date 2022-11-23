@@ -63,6 +63,9 @@ const Chat = () => {
           type="text"
           placeholder="Your Message"
         />
+        <button className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1">
+          Send
+        </button>
       </div>
     </div>
   );

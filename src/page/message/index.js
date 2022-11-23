@@ -1,4 +1,5 @@
 import React from "react";
+import Chat from "../../components/Chat";
 import Friends from "../../components/Friends";
 import JoinGroupList from "../../components/JoinGroupList";
 import Sidebar from "../../components/Sidebar";
@@ -13,7 +14,9 @@ const Message = () => {
         <JoinGroupList />
         <Friends />
       </div>
-      <div className="w-[1235px] mt-10"></div>
+      <div className="w-[1235px] mt-10">
+        <Chat />
+      </div>
     </div>
   );
 };

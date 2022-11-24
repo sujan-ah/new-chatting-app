@@ -57,7 +57,6 @@ const Friends = (props) => {
   };
 
   let handleActiveChat = (item) => {
-    // console.log(item);
     dispatch(activeChat(item));
   };
 

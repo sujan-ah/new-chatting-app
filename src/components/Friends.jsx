@@ -9,10 +9,13 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { TbMessageCircle } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import { activeChat } from "../slices/activeChat";
 
 const Friends = (props) => {
   const auth = getAuth();
   const db = getDatabase();
+  let dispatch = useDispatch();
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
@@ -53,6 +56,11 @@ const Friends = (props) => {
         });
   };
 
+  let handleActiveChat = (item) => {
+    // console.log(item);
+    dispatch(activeChat(item));
+  };
+
   return (
     <div className="rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">Friends</h1>
@@ -88,7 +96,10 @@ const Friends = (props) => {
               Block
             </button>
           ) : (
-            <button className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1">
+            <button
+              onClick={() => handleActiveChat(item)}
+              className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1"
+            >
               <TbMessageCircle />
             </button>
           )}

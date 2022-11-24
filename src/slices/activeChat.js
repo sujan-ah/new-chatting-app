@@ -3,11 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const activeChatSlice = createSlice({
   name: "activeChat",
   initialState: {
-    value: "sujan",
+    value: "null",
   },
   reducers: {
-    activeChat: (state) => {
-      console.log(state);
+    activeChat: (state, action) => {
+      state.value = action.payload;
+      // console.log(action.payload);
     },
   },
 });

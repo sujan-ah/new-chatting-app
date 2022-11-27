@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
+  let data = useSelector((state) => state.activeChat.value);
+  // console.log(data.activeChat.value);
+
   return (
     <div className="bg-white h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
       <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
@@ -8,7 +12,7 @@ const Chat = () => {
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
         </div>
         <div>
-          <h1 className="font-nunito font-bold text-base">Swathi</h1>
+          <h1 className="font-nunito font-bold text-base">{data.name}</h1>
           <p className="font-nunito font-semibold text-sm opacity-60">Online</p>
         </div>
       </div>

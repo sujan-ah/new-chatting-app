@@ -57,14 +57,27 @@ const Friends = (props) => {
   };
 
   let handleActiveChat = (item) => {
-    dispatch(activeChat(item));
+    let userInfo = {};
+    if (item.receiverid == auth.currentUser.uid) {
+      userInfo.status = "single";
+      userInfo.id = item.senderId;
+      userInfo.name = item.sendername;
+    } else {
+      userInfo.status = "single";
+      userInfo.id = item.receiverid;
+      userInfo.name = item.receivername;
+    }
+    dispatch(activeChat(userInfo));
   };
 
   return (
     <div className="rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">Friends</h1>
       {friends.map((item) => (
-        <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
+        <div
+          onClick={() => handleActiveChat(item)}
+          className="flex justify-between mt-4 border-b pb-2.5 items-center"
+        >
           <div>
             <img
               src="images/groupimg.png"
@@ -95,10 +108,7 @@ const Friends = (props) => {
               Block
             </button>
           ) : (
-            <button
-              onClick={() => handleActiveChat(item)}
-              className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1"
-            >
+            <button className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1">
               <TbMessageCircle />
             </button>
           )}

@@ -27,7 +27,7 @@ const JoinGroupList = () => {
       let arr = [];
       snapshot.forEach((item) => {
         if (item.val().groupadminId == auth.currentUser.uid) {
-          arr.push(item.val());
+          arr.push({ ...item.val(), key: item.key });
         }
       });
       setJglist(arr);
@@ -48,7 +48,13 @@ const JoinGroupList = () => {
   }, []);
 
   let handleActiveChat = (item) => {
-    dispatch(activeChat(item));
+    let userInfo = {
+      status: "single",
+      name: item.groupname,
+      groupId: item.key,
+    };
+
+    dispatch(activeChat(userInfo));
   };
 
   return (

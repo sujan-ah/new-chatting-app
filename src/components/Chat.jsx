@@ -12,6 +12,7 @@ const Chat = () => {
   let [singlemsglist, setSinglemsglist] = useState([]);
 
   let data = useSelector((state) => state.activeChat.value);
+  console.log(data);
 
   let handleMsg = (e) => {
     setMsg(e.target.value);
@@ -39,11 +40,19 @@ const Chat = () => {
     onValue(starCountRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val());
+        console.log(item.val());
+        if (
+          (item.val().whoreceiverid == auth.currentUser.uid &&
+            item.val().whosenderid == data.id) ||
+          (item.val().whosenderid == auth.currentUser.uid &&
+            item.val().whoreceiverid == data.id)
+        ) {
+          arr.push(item.val());
+        }
       });
       setSinglemsglist(arr);
     });
-  }, []);
+  }, [data.id]);
 
   return (
     <div className="bg-white h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">

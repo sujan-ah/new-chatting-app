@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { getDatabase, ref, set, push, onValue } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
 
 const Chat = () => {
+  const db = getDatabase();
+  const auth = getAuth();
+
   let [msg, setMsg] = useState("");
+  let [singlemsglist, setSinglemsglist] = useState([]);
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -15,8 +22,28 @@ const Chat = () => {
       console.log("eta group msg");
     } else {
       console.log("eta single msg");
+      const db = getDatabase();
+      set(push(ref(db, "singlemsg/")), {
+        whosenderid: auth.currentUser.uid,
+        whosendername: auth.currentUser.displayName,
+        whoreceiverid: data.id,
+        whoreceivername: data.name,
+        msg: msg,
+      });
     }
   };
+
+  useEffect(() => {
+    const db = getDatabase();
+    const starCountRef = ref(db, "singlemsg/");
+    onValue(starCountRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val());
+      });
+      setSinglemsglist(arr);
+    });
+  }, []);
 
   return (
     <div className="bg-white h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
@@ -33,16 +60,31 @@ const Chat = () => {
       </div>
 
       <div className=" h-[68vh] overflow-y-scroll">
-        <div className="mt-5">
-          <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-            Hi there
-          </p>
-          <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-            Today, 8:56pm
-          </p>
-        </div>
+        {singlemsglist.map((item) =>
+          item.whosenderid == auth.currentUser.uid ? (
+            <div className="mt-5 flex justify-end">
+              <div>
+                <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                  {item.msg}
+                </p>
+                <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                  Today, 8:56pm
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-5">
+              <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                {item.msg}
+              </p>
+              <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                Today, 8:56pm
+              </p>
+            </div>
+          )
+        )}
 
-        <div className="mt-5 flex justify-end">
+        {/* <div className="mt-5 flex justify-end">
           <div>
             <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
               Hi there
@@ -73,7 +115,7 @@ const Chat = () => {
               Today, 8:56pm
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>

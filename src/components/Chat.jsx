@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Chat = () => {
+  let [msg, setMsg] = useState("");
+
   let data = useSelector((state) => state.activeChat.value);
-  // console.log(data.activeChat.value);
+
+  let handleMsg = (e) => {
+    setMsg(e.target.value);
+  };
+
+  let handleMsgSend = () => {
+    if (data.status == "group") {
+      console.log("eta group msg");
+    } else {
+      console.log("eta single msg");
+    }
+  };
 
   return (
     <div className="bg-white h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
@@ -12,7 +25,9 @@ const Chat = () => {
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
         </div>
         <div>
-          <h1 className="font-nunito font-bold text-base">{data.name}</h1>
+          <h1 className="font-nunito font-bold text-base">
+            {data.name ? data.name : "Select a group name or friend"}
+          </h1>
           <p className="font-nunito font-semibold text-sm opacity-60">Online</p>
         </div>
       </div>
@@ -63,11 +78,15 @@ const Chat = () => {
 
       <div>
         <input
+          onChange={handleMsg}
           className="bg-[#F1F1F1] w-[90%] px-4 rounded py-2 mt-5"
           type="text"
           placeholder="Your Message"
         />
-        <button className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1">
+        <button
+          onClick={handleMsgSend}
+          className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
+        >
           Send
         </button>
       </div>

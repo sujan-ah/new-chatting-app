@@ -49,7 +49,7 @@ const JoinGroupList = () => {
 
   let handleActiveChat = (item) => {
     let userInfo = {
-      status: "single",
+      status: "group",
       name: item.groupname,
       groupId: item.key,
     };

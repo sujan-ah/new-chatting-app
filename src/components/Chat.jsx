@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { getDatabase, ref, set, push, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
+import moment from "moment/moment";
 
 const Chat = () => {
   const db = getDatabase();
@@ -22,7 +23,6 @@ const Chat = () => {
     if (data.status == "group") {
       console.log("eta group msg");
     } else {
-      console.log("eta single msg");
       const db = getDatabase();
       set(push(ref(db, "singlemsg/")), {
         whosenderid: auth.currentUser.uid,
@@ -30,6 +30,9 @@ const Chat = () => {
         whoreceiverid: data.id,
         whoreceivername: data.name,
         msg: msg,
+        date: `${new Date().getFullYear()}-${
+          new Date().getMonth() + 1
+        }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
       });
     }
   };
@@ -40,7 +43,6 @@ const Chat = () => {
     onValue(starCountRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        console.log(item.val());
         if (
           (item.val().whoreceiverid == auth.currentUser.uid &&
             item.val().whosenderid == data.id) ||
@@ -77,7 +79,7 @@ const Chat = () => {
                   {item.msg}
                 </p>
                 <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                  Today, 8:56pm
+                  {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
                 </p>
               </div>
             </div>
@@ -87,7 +89,7 @@ const Chat = () => {
                 {item.msg}
               </p>
               <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                Today, 8:56pm
+                {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
               </p>
             </div>
           )

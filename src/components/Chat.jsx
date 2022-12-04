@@ -11,9 +11,9 @@ const Chat = () => {
 
   let [msg, setMsg] = useState("");
   let [singlemsglist, setSinglemsglist] = useState([]);
+  let [groupmsglist, setGroupmsglist] = useState([]);
 
   let data = useSelector((state) => state.activeChat.value);
-  console.log(data);
 
   let handleMsg = (e) => {
     setMsg(e.target.value);
@@ -21,10 +21,20 @@ const Chat = () => {
 
   let handleMsgSend = () => {
     if (data.status == "group") {
-      console.log("eta group msg");
+      const db = getDatabase();
+      set(push(ref(db, "groupmsg")), {
+        whosenderid: auth.currentUser.uid,
+        whosendername: auth.currentUser.displayName,
+        whoreceiverid: data.groupId,
+        whoreceivername: data.name,
+        msg: msg,
+        date: `${new Date().getFullYear()}-${
+          new Date().getMonth() + 1
+        }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+      });
     } else {
       const db = getDatabase();
-      set(push(ref(db, "singlemsg/")), {
+      set(push(ref(db, "singlemsg")), {
         whosenderid: auth.currentUser.uid,
         whosendername: auth.currentUser.displayName,
         whoreceiverid: data.id,
@@ -39,7 +49,7 @@ const Chat = () => {
 
   useEffect(() => {
     const db = getDatabase();
-    const starCountRef = ref(db, "singlemsg/");
+    const starCountRef = ref(db, "singlemsg");
     onValue(starCountRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
@@ -56,6 +66,17 @@ const Chat = () => {
     });
   }, [data.id]);
 
+  useEffect(() => {
+    const groupmsgrefRef = ref(db, "groupmsg");
+    onValue(groupmsgrefRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val());
+      });
+      setGroupmsglist(arr);
+    });
+  }, [data.groupId]);
+
   return (
     <div className="bg-white h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
       <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
@@ -71,29 +92,57 @@ const Chat = () => {
       </div>
 
       <div className=" h-[68vh] overflow-y-scroll">
-        {singlemsglist.map((item) =>
-          item.whosenderid == auth.currentUser.uid ? (
-            <div className="mt-5 flex justify-end">
-              <div>
-                <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
-                  {item.msg}
-                </p>
-                <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                  {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-5">
-              <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-                {item.msg}
-              </p>
-              <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
-              </p>
-            </div>
-          )
-        )}
+        {data.status == "group"
+          ? groupmsglist.map((item) =>
+              item.whosenderid == auth.currentUser.uid
+                ? item.whoreceiverid == data.groupId && (
+                    <div className="mt-5 flex justify-end">
+                      <div>
+                        <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
+                          {item.msg}
+                        </p>
+                        <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                          {" "}
+                          {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                : item.whoreceiverid == data.groupId && (
+                    <div className="mt-5">
+                      <p className="font-nunito font-medium text-xl bg-[#F1F1F1] inline-block p-3.5 rounded-xl">
+                        {item.msg}
+                      </p>
+                      <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                        {" "}
+                        {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                      </p>
+                    </div>
+                  )
+            )
+          : singlemsglist.map((item) =>
+              item.whosenderid == auth.currentUser.uid ? (
+                <div className="mt-5 flex justify-end">
+                  <div>
+                    <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                      {item.msg}
+                    </p>
+                    <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                      {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-5">
+                  <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                    {item.msg}
+                  </p>
+                  <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                    {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                  </p>
+                </div>
+              )
+            )}
 
         {/* <div className="mt-5 flex justify-end">
           <div>

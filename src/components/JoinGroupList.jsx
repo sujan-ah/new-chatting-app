@@ -1,13 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-  push,
-  remove,
-} from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
@@ -51,9 +44,8 @@ const JoinGroupList = () => {
     let userInfo = {
       status: "group",
       name: item.groupname,
-      groupId: item.key,
+      groupId: auth.currentUser.uid == item.groupadminId ? item.key : item.gid,
     };
-
     dispatch(activeChat(userInfo));
   };
 
@@ -87,7 +79,10 @@ const JoinGroupList = () => {
         </div>
       ))}
       {gmember.map((item) => (
-        <div className="flex gap-x-16 mt-4 border-b pb-2.5 items-center">
+        <div
+          onClick={() => handleActiveChat(item)}
+          className="flex gap-x-16 mt-4 border-b pb-2.5 items-center"
+        >
           <div>
             <img
               src="images/groupimg.png"

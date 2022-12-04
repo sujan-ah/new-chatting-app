@@ -49,6 +49,22 @@ const Group = () => {
       username: auth.currentUser.displayName,
       userprofile: auth.currentUser.photoURL,
     });
+    set(push(ref(db, "notification")), {
+      gid: item.gid,
+      groupadminid: item.groupadminId,
+      groupname: item.groupname,
+      grouptag: item.grouptag,
+      userid: auth.currentUser.uid,
+      username: auth.currentUser.displayName,
+    });
+    set(push(ref(db, "notificationLength")), {
+      gid: item.gid,
+      groupadminid: item.groupadminId,
+      groupname: item.groupname,
+      grouptag: item.grouptag,
+      userid: auth.currentUser.uid,
+      username: auth.currentUser.displayName,
+    });
   };
 
   return (

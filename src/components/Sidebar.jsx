@@ -6,10 +6,15 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getDatabase, ref, remove } from "firebase/database";
 
 const Sidebar = ({ active }) => {
+  let db = getDatabase();
   const navigate = useNavigate();
   const auth = getAuth();
+
+  let data = useSelector((state) => state.activeChat.value);
 
   let handleLogout = () => {
     signOut(auth).then(() => {
@@ -18,6 +23,10 @@ const Sidebar = ({ active }) => {
   };
   let handleImgModalshow = () => {
     navigate("/imgupload");
+  };
+
+  let handleNotification = () => {
+    remove(ref(db, "notificationLength/"));
   };
 
   return (
@@ -73,7 +82,29 @@ const Sidebar = ({ active }) => {
           </Link>
         </div>
 
-        <IoMdNotificationsOutline className="text-3xl xl:text-5xl text-white" />
+        <div
+          className={`${
+            active == "notification" &&
+            "relative z-10 after:absolute after:top-0 after:left-0 after:content-[''] after:bg-white xl:after:w-[243%] after:h-full  after:z-[-1] xl:px-11 xl:py-5 after:rounded-3xl before:absolute before:top-0 before:right-[-34px] before:content-[''] xl:before:bg-primary xl:before:w-[15%] before:h-full before:rounded-3xl before:drop-shadow-2xl"
+          }`}
+        >
+          {data.length > 0 && (
+            <div className="w-6	h-6	bg-red-600 rounded-full text-center text-white absolute top-100 left-24">
+              {data.length}
+            </div>
+          )}
+
+          <Link to="/notification">
+            <IoMdNotificationsOutline
+              onClick={handleNotification}
+              className={`${
+                active == "notification"
+                  ? "text-3xl xl:text-5xl text-white xl:text-primary"
+                  : "text-3xl xl:text-5xl text-white"
+              }`}
+            />
+          </Link>
+        </div>
         <AiOutlineSetting className="text-3xl xl:text-5xl text-white " />
         <HiOutlineLogout
           onClick={handleLogout}

@@ -98,6 +98,10 @@ const Chat = () => {
                 ? item.whoreceiverid == data.groupId && (
                     <div className="mt-5 flex justify-end">
                       <div>
+                        <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                          {item.whosendername}
+                        </p>
+                        <br />
                         <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
                           {item.msg}
                         </p>
@@ -110,6 +114,10 @@ const Chat = () => {
                   )
                 : item.whoreceiverid == data.groupId && (
                     <div className="mt-5">
+                      <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                        {item.whosendername}
+                      </p>
+                      <br />
                       <p className="font-nunito font-medium text-xl bg-[#F1F1F1] inline-block p-3.5 rounded-xl">
                         {item.msg}
                       </p>

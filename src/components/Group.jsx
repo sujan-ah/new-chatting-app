@@ -1,14 +1,6 @@
-import { useState } from "react";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-  push,
-  remove,
-} from "firebase/database";
+import { useState, useEffect } from "react";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
 
 const Group = () => {
   let db = getDatabase();

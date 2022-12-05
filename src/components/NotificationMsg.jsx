@@ -41,9 +41,10 @@ const NotificationMsg = () => {
     <>
       {notificationMsg.map((item) => (
         <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
-          <h1 className="font-nunito font-bold text-base">
-            {item.username} send a request in your {item.groupname} group
-          </h1>
+          <p className="font-nunito font-semibold text-base">
+            <b>{item.username}</b> send a request in your{" "}
+            <b>{item.groupname}</b> group
+          </p>
         </div>
       ))}
     </>

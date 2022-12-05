@@ -78,16 +78,18 @@ const Chat = () => {
   }, [data.groupId]);
 
   return (
-    <div className="bg-white h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
+    <div className="text-black h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
       <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
         <div>
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
         </div>
         <div>
-          <h1 className="font-nunito font-bold text-base">
+          <h1 className="font-nunito font-bold text-base ">
             {data.name ? data.name : "Select a group name or friend"}
           </h1>
-          <p className="font-nunito font-semibold text-sm opacity-60">Online</p>
+          <p className="font-nunito font-semibold text-sm opacity-60 ">
+            Online
+          </p>
         </div>
       </div>
 

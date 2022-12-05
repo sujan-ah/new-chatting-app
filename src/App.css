@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+.dark {
+  display: none;
+}
+
+.abc {
+  position: relative;
+}
+
+.abc:before {
+  width: 40px;
+  height: 20px;
+  background: black;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+}
+.abc:after {
+  width: 15px;
+  height: 15px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  content: "";
+  transition: 0.4s;
+}
+
+.dark:checked + .abc:after {
+  left: 22px;
+}
+.dark:checked + .abc:before {
+  background: rgb(232, 226, 226);
+}

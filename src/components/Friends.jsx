@@ -73,47 +73,53 @@ const Friends = (props) => {
   return (
     <div className="rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">Friends</h1>
-      {friends.map((item) => (
-        <div
-          onClick={() => handleActiveChat(item)}
-          className="flex justify-between mt-4 border-b pb-2.5 items-center"
-        >
-          <div>
-            <img
-              src="images/groupimg.png"
-              className="w-16 h-16 rounded-[50%]"
-            />
-          </div>
-          <div>
-            <h1 className="font-nunito font-bold text-base">
-              {auth.currentUser.uid == item.senderId
-                ? item.receivername
-                : item.sendername}
-            </h1>
-            <p className="font-nunito font-semibold text-sm opacity-60">
-              Dinner?
-            </p>
-          </div>
-          <div>
-            <p className="font-nunito font-semibold text-sm opacity-60">
-              Today, 8:56pm
-            </p>
-          </div>
+      {friends.length == 0 ? (
+        <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
+          No Friends Are Available
+        </p>
+      ) : (
+        friends.map((item) => (
+          <div
+            onClick={() => handleActiveChat(item)}
+            className="flex justify-between mt-4 border-b pb-2.5 items-center"
+          >
+            <div>
+              <img
+                src="images/groupimg.png"
+                className="w-16 h-16 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h1 className="font-nunito font-bold text-base">
+                {auth.currentUser.uid == item.senderId
+                  ? item.receivername
+                  : item.sendername}
+              </h1>
+              <p className="font-nunito font-semibold text-sm opacity-60">
+                Dinner?
+              </p>
+            </div>
+            <div>
+              <p className="font-nunito font-semibold text-sm opacity-60">
+                Today, 8:56pm
+              </p>
+            </div>
 
-          {props.block ? (
-            <button
-              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
-              onClick={() => handleBlock(item)}
-            >
-              Block
-            </button>
-          ) : (
-            <button className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1">
-              <TbMessageCircle />
-            </button>
-          )}
-        </div>
-      ))}
+            {props.block ? (
+              <button
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                onClick={() => handleBlock(item)}
+              >
+                Block
+              </button>
+            ) : (
+              <button className="bg-primary text-3xl	 text-white font-nunito font-bold text-lg rounded p-1">
+                <TbMessageCircle />
+              </button>
+            )}
+          </div>
+        ))
+      )}
     </div>
   );
 };

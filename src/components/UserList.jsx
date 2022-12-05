@@ -68,47 +68,55 @@ const UserList = () => {
   return (
     <div className=" rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">User List</h1>
-      {userlist.map((item) => (
-        <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
-          <div>
-            <img
-              src={item.profile_picture}
-              className="w-16 h-16 rounded-[50%]"
-            />
+      {userlist.length == 0 ? (
+        <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
+          No Users Are Available
+        </p>
+      ) : (
+        userlist.map((item) => (
+          <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
+            <div>
+              <img
+                src={item.profile_picture}
+                className="w-16 h-16 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h1 className="font-nunito font-bold text-base">
+                {item.username}
+              </h1>
+              <p className="font-nunito font-semibold text-sm opacity-60">
+                {item.email}
+              </p>
+            </div>
+            <div>
+              {friendList.includes(item.id + auth.currentUser.uid) ||
+              friendList.includes(auth.currentUser.uid + item.id) ? (
+                <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                  Friend
+                </button>
+              ) : friend.includes(item.id + auth.currentUser.uid) ||
+                friend.includes(auth.currentUser.uid + item.id) ? (
+                <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                  Pending
+                </button>
+              ) : blockList.includes(item.id + auth.currentUser.uid) ||
+                blockList.includes(auth.currentUser.uid + item.id) ? (
+                <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
+                  Blocked
+                </button>
+              ) : (
+                <button
+                  className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                  onClick={() => handleSendFrequest(item)}
+                >
+                  Send Request
+                </button>
+              )}
+            </div>
           </div>
-          <div>
-            <h1 className="font-nunito font-bold text-base">{item.username}</h1>
-            <p className="font-nunito font-semibold text-sm opacity-60">
-              {item.email}
-            </p>
-          </div>
-          <div>
-            {friendList.includes(item.id + auth.currentUser.uid) ||
-            friendList.includes(auth.currentUser.uid + item.id) ? (
-              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
-                Friend
-              </button>
-            ) : friend.includes(item.id + auth.currentUser.uid) ||
-              friend.includes(auth.currentUser.uid + item.id) ? (
-              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
-                Pending
-              </button>
-            ) : blockList.includes(item.id + auth.currentUser.uid) ||
-              blockList.includes(auth.currentUser.uid + item.id) ? (
-              <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1">
-                Blocked
-              </button>
-            ) : (
-              <button
-                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
-                onClick={() => handleSendFrequest(item)}
-              >
-                Send Request
-              </button>
-            )}
-          </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

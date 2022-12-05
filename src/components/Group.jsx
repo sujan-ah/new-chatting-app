@@ -101,6 +101,10 @@ const Group = () => {
             Submit
           </button>
         </>
+      ) : grouplist.length == 0 ? (
+        <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
+          No Groups Are Available
+        </p>
       ) : (
         grouplist &&
         grouplist.map((item) => (

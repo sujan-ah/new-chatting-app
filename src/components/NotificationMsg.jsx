@@ -39,14 +39,20 @@ const NotificationMsg = () => {
 
   return (
     <>
-      {notificationMsg.map((item) => (
-        <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
-          <p className="font-nunito font-semibold text-base">
-            <b>{item.username}</b> send a request in your{" "}
-            <b>{item.groupname}</b> group
-          </p>
-        </div>
-      ))}
+      {notificationMsg.length == 0 ? (
+        <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
+          No Notifications Are Available
+        </p>
+      ) : (
+        notificationMsg.map((item) => (
+          <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
+            <p className="font-nunito font-semibold text-base">
+              <b>{item.username}</b> send a request in your{" "}
+              <b>{item.groupname}</b> group
+            </p>
+          </div>
+        ))
+      )}
     </>
   );
 };

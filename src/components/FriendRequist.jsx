@@ -46,32 +46,38 @@ const FriendRequist = () => {
   return (
     <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
       <h1 className="font-nunito font-bold text-lg">Friend Request</h1>
-      {friendreqshow.map((item) => (
-        <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
-          <div>
-            <img
-              src="images/groupimg.png"
-              className="w-16 h-16 rounded-[50%]"
-            />
+      {friendreqshow.length == 0 ? (
+        <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
+          No Friend Request Available
+        </p>
+      ) : (
+        friendreqshow.map((item) => (
+          <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
+            <div>
+              <img
+                src="images/groupimg.png"
+                className="w-16 h-16 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h1 className="font-nunito font-bold text-base">
+                {item.sendername}
+              </h1>
+              <p className="font-nunito font-semibold text-sm opacity-60">
+                Hi Guys, Wassup!
+              </p>
+            </div>
+            <div>
+              <button
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                onClick={() => handleAcceptFriendRequest(item)}
+              >
+                Accept
+              </button>
+            </div>
           </div>
-          <div>
-            <h1 className="font-nunito font-bold text-base">
-              {item.sendername}
-            </h1>
-            <p className="font-nunito font-semibold text-sm opacity-60">
-              Hi Guys, Wassup!
-            </p>
-          </div>
-          <div>
-            <button
-              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
-              onClick={() => handleAcceptFriendRequest(item)}
-            >
-              Accept
-            </button>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

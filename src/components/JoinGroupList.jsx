@@ -56,6 +56,10 @@ const JoinGroupList = () => {
       </h1>
       {jglist.length == 0 ? (
         <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
+          No Created Groups Are Available
+        </p>
+      ) : gmember.length == 0 ? (
+        <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
           No Joined Groups Are Available
         </p>
       ) : (

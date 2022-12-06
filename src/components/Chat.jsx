@@ -4,15 +4,23 @@ import { getDatabase, ref, set, push, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import moment from "moment/moment";
+import {
+  getStorage,
+  ref as sref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const Chat = () => {
   const db = getDatabase();
   const auth = getAuth();
+  const storage = getStorage();
 
   let [msg, setMsg] = useState("");
   let [singlemsglist, setSinglemsglist] = useState([]);
   let [groupmsglist, setGroupmsglist] = useState([]);
   let [show, setShow] = useState(false);
+  let [file, setFile] = useState("");
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -77,6 +85,40 @@ const Chat = () => {
       setGroupmsglist(arr);
     });
   }, [data.groupId]);
+
+  let handleSingleImageUpload = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  let handleImageUpload = () => {
+    const singleImageRef = sref(storage, "singleimages/" + file.name);
+
+    const uploadTask = uploadBytesResumable(singleImageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+        });
+      }
+    );
+  };
 
   return (
     <div className="text-black h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
@@ -215,10 +257,13 @@ const Chat = () => {
             <h1 className="font-nunito font-bold text-2xl mb-4">
               Select Image For Upload{" "}
             </h1>
-            <input type="file" />
+            <input type="file" onChange={handleSingleImageUpload} />
             <br />
 
-            <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1 mt-4">
+            <button
+              onClick={handleImageUpload}
+              className="bg-primary text-white font-nunito font-bold text-lg rounded p-1 mt-4"
+            >
               Upload
             </button>
             <button

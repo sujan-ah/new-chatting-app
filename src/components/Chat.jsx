@@ -12,6 +12,7 @@ const Chat = () => {
   let [msg, setMsg] = useState("");
   let [singlemsglist, setSinglemsglist] = useState([]);
   let [groupmsglist, setGroupmsglist] = useState([]);
+  let [show, setShow] = useState(false);
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -84,7 +85,7 @@ const Chat = () => {
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
         </div>
         <div>
-          <h1 className="font-nunito font-bold text-base ">
+          <h1 className="font-nunito font-bold text-2xl ">
             {data.name ? data.name : "Select a group name or friend"}
           </h1>
           <p className="font-nunito font-semibold text-sm opacity-60 ">
@@ -191,7 +192,7 @@ const Chat = () => {
       <div>
         <input
           onChange={handleMsg}
-          className="bg-[#F1F1F1] w-[90%] px-4 rounded py-2 mt-5"
+          className="bg-[#F1F1F1] w-[80%] px-4 rounded py-2 mt-5"
           type="text"
           placeholder="Your Message"
         />
@@ -201,7 +202,34 @@ const Chat = () => {
         >
           Send
         </button>
+        <button
+          onClick={() => setShow(true)}
+          className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
+        >
+          Attachment
+        </button>
       </div>
+      {show && (
+        <div className="h-screen w-full bg-[rgba(0,0,0,.6)] absolute top-0 left-0 z-30 flex justify-center items-center ">
+          <div className="bg-white p-4 rounded">
+            <h1 className="font-nunito font-bold text-2xl mb-4">
+              Select Image For Upload{" "}
+            </h1>
+            <input type="file" />
+            <br />
+
+            <button className="bg-primary text-white font-nunito font-bold text-lg rounded p-1 mt-4">
+              Upload
+            </button>
+            <button
+              onClick={() => setShow(false)}
+              className="bg-red-500 text-white font-nunito font-bold text-lg rounded p-1 mt-4 ml-4"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -115,6 +115,24 @@ const Chat = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
+
+          if (file !== "") {
+            if (data.status == "group") {
+              console.log("ami group msg");
+            } else {
+              const db = getDatabase();
+              set(push(ref(db, "singlemsg")), {
+                whosenderid: auth.currentUser.uid,
+                whosendername: auth.currentUser.displayName,
+                whoreceiverid: data.id,
+                whoreceivername: data.name,
+                img: downloadURL,
+                date: `${new Date().getFullYear()}-${
+                  new Date().getMonth() + 1
+                }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+              });
+            }
+          }
         });
       }
     );
@@ -175,20 +193,53 @@ const Chat = () => {
             )
           : singlemsglist.map((item) =>
               item.whosenderid == auth.currentUser.uid ? (
-                <div className="mt-5 flex justify-end">
-                  <div>
-                    <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
-                      {item.msg}
-                    </p>
-                    <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                      {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
-                    </p>
+                item.msg ? (
+                  <div className="mt-5 flex justify-end">
+                    <div>
+                      <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                        {item.msg}
+                      </p>
+                      <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                        {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ) : (
+                ) : (
+                  <div className="mt-5 flex justify-end">
+                    <div>
+                      <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                        <picture>
+                          <img src={item.img} />
+                        </picture>
+                      </p>
+                      <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                        {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                      </p>
+                    </div>
+                  </div>
+                )
+              ) : item.msg ? (
                 <div className="mt-5">
                   <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
                     {item.msg}
+                  </p>
+                  <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                    {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                  </p>
+                </div>
+              ) : item.msg ? (
+                <div className="mt-5 ">
+                  <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                    <img src={item.img} />
+                  </p>
+                  <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                    {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-5 ">
+                  <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                    <img src={item.img} />
                   </p>
                   <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
                     {moment(item.date, "YYYYMMDD, h:mm").fromNow()}

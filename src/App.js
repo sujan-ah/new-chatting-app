@@ -11,9 +11,9 @@ import ForgotPassword from "./page/forgot password";
 import Imgupload from "./components/Imgupload";
 
 function App() {
-  let [dark, setDark] = useState();
+  let [dark, setDark] = useState(false);
   return (
-    <div className={dark ? "bg-black" : "bg-white"}>
+    <div className={dark ? "bg-black text-white" : "bg-white"}>
       <div>
         <input
           className="dark"

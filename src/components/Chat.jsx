@@ -21,6 +21,7 @@ const Chat = () => {
   let [groupmsglist, setGroupmsglist] = useState([]);
   let [show, setShow] = useState(false);
   let [file, setFile] = useState("");
+  let [progress, setProgress] = useState("");
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -99,7 +100,7 @@ const Chat = () => {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        setProgress("Upload is " + progress + "% done");
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -130,6 +131,9 @@ const Chat = () => {
                 date: `${new Date().getFullYear()}-${
                   new Date().getMonth() + 1
                 }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+              }).then(() => {
+                setShow(false);
+                setProgress("");
               });
             }
           }
@@ -209,7 +213,7 @@ const Chat = () => {
                     <div>
                       <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
                         <picture>
-                          <img src={item.img} />
+                          <img className="w-52 h-52" src={item.img} />
                         </picture>
                       </p>
                       <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
@@ -239,7 +243,7 @@ const Chat = () => {
               ) : (
                 <div className="mt-5 ">
                   <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-                    <img src={item.img} />
+                    <img className="w-52 h-52" src={item.img} />
                   </p>
                   <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
                     {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
@@ -247,39 +251,6 @@ const Chat = () => {
                 </div>
               )
             )}
-
-        {/* <div className="mt-5 flex justify-end">
-          <div>
-            <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
-              Hi there
-            </p>
-            <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-              Today, 8:56pm
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-5 ">
-          <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-            <img src="images/registratiomimg.webp" alt="" />
-          </p>
-          <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-            Today, 8:56pm
-          </p>
-        </div>
-
-        <div className="mt-5 flex justify-end">
-          <div>
-            <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
-              <picture>
-                <img src="images/registratiomimg.webp" alt="" />
-              </picture>
-            </p>
-            <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-              Today, 8:56pm
-            </p>
-          </div>
-        </div> */}
       </div>
 
       <div>
@@ -310,6 +281,8 @@ const Chat = () => {
             </h1>
             <input type="file" onChange={handleSingleImageUpload} />
             <br />
+
+            <h1>{progress}</h1>
 
             <button
               onClick={handleImageUpload}

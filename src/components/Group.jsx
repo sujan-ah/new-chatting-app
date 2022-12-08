@@ -57,7 +57,7 @@ const Group = () => {
       userid: auth.currentUser.uid,
       username: auth.currentUser.displayName,
     });
-    set(push(ref(db, "notificationLength")), {
+    set(push(ref(db, "notificationLength/" + `${item.groupadminId}`)), {
       gid: item.gid,
       groupadminid: item.groupadminId,
       groupname: item.groupname,

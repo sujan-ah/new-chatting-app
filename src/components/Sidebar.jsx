@@ -7,14 +7,20 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getDatabase, ref, remove } from "firebase/database";
+import { getDatabase, ref, remove, onValue } from "firebase/database";
+import { useEffect, useState } from "react";
 
 const Sidebar = ({ active }) => {
   let db = getDatabase();
   const navigate = useNavigate();
   const auth = getAuth();
 
-  let data = useSelector((state) => state.activeChat.value);
+  // let data = useSelector((state) => state.activeChat.value);
+  // console.log(data);
+  // console.log(data.length);
+
+  let [notificationMsgLength, setNotificationMsgLength] = useState([]);
+  console.log(notificationMsgLength);
 
   let handleLogout = () => {
     signOut(auth).then(() => {
@@ -26,8 +32,23 @@ const Sidebar = ({ active }) => {
   };
 
   let handleNotification = () => {
-    remove(ref(db, "notificationLength/"));
+    remove(ref(db, "notificationLength/" + `${auth.currentUser.uid}`));
   };
+
+  useEffect(() => {
+    const groupRef = ref(db, "notificationLength/" + `${auth.currentUser.uid}`);
+    onValue(groupRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (item.val().groupadminid == auth.currentUser.uid) {
+          arr.push(item.val());
+          console.log(item.val());
+        }
+      });
+      setNotificationMsgLength(arr);
+      // dispatch(activeChat(arr));
+    });
+  }, []);
 
   return (
     <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-full ml-[-12px] xl:ml-0">
@@ -88,10 +109,12 @@ const Sidebar = ({ active }) => {
             "relative z-10 after:absolute after:top-0 after:left-0 after:content-[''] after:bg-white xl:after:w-[243%] after:h-full  after:z-[-1] xl:px-11 xl:py-5 after:rounded-3xl before:absolute before:top-0 before:right-[-34px] before:content-[''] xl:before:bg-primary xl:before:w-[15%] before:h-full before:rounded-3xl before:drop-shadow-2xl"
           }`}
         >
-          {data.length > 0 && (
+          {notificationMsgLength.length > 0 ? (
             <div className="w-6	h-6	bg-red-600 rounded-full text-center text-white absolute top-100 left-24">
-              {data.length}
+              {notificationMsgLength.length}
             </div>
+          ) : (
+            ""
           )}
 
           <Link to="/notification">
@@ -105,6 +128,7 @@ const Sidebar = ({ active }) => {
             />
           </Link>
         </div>
+
         <AiOutlineSetting className="text-3xl xl:text-5xl text-white " />
         <HiOutlineLogout
           onClick={handleLogout}

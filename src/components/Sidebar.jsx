@@ -6,7 +6,6 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getDatabase, ref, remove, onValue } from "firebase/database";
 import { useEffect, useState } from "react";
 
@@ -15,12 +14,7 @@ const Sidebar = ({ active }) => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  // let data = useSelector((state) => state.activeChat.value);
-  // console.log(data);
-  // console.log(data.length);
-
   let [notificationMsgLength, setNotificationMsgLength] = useState([]);
-  console.log(notificationMsgLength);
 
   let handleLogout = () => {
     signOut(auth).then(() => {
@@ -42,11 +36,9 @@ const Sidebar = ({ active }) => {
       snapshot.forEach((item) => {
         if (item.val().groupadminid == auth.currentUser.uid) {
           arr.push(item.val());
-          console.log(item.val());
         }
       });
       setNotificationMsgLength(arr);
-      // dispatch(activeChat(arr));
     });
   }, []);
 

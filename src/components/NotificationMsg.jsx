@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { activeChat } from "../slices/activeChat";
 
 const NotificationMsg = () => {
   let db = getDatabase();
   const auth = getAuth();
-  const dispatch = useDispatch();
 
   let [notificationMsg, setNotificationMsg] = useState([]);
 

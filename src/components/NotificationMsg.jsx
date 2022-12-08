@@ -24,19 +24,6 @@ const NotificationMsg = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const groupRef = ref(db, "notificationLength");
-    onValue(groupRef, (snapshot) => {
-      let arr = [];
-      snapshot.forEach((item) => {
-        if (item.val().groupadminid == auth.currentUser.uid) {
-          arr.push(item.val());
-        }
-      });
-      dispatch(activeChat(arr));
-    });
-  }, []);
-
   return (
     <>
       {notificationMsg.length == 0 ? (

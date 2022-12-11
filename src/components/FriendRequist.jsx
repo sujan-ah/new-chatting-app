@@ -28,7 +28,6 @@ const FriendRequist = () => {
   }, []);
 
   let handleAcceptFriendRequest = (item) => {
-    console.log(item);
     set(push(ref(db, "friends")), {
       id: item.id,
       senderId: item.senderId,
@@ -40,6 +39,18 @@ const FriendRequist = () => {
       }  / ${new Date().getFullYear()}`,
     }).then(() => {
       remove(ref(db, "friendrequest/" + item.id));
+    });
+
+    set(push(ref(db, "notification")), {
+      id: item.id,
+      senderIdnotifi: item.senderId,
+      sendername: item.sendername,
+      receiveridnotifi: item.receiverid,
+      receivername: item.receivername,
+    });
+
+    set(push(ref(db, "notificationLength/" + `${item.senderId}`)), {
+      senderIdnotifi: item.senderId,
     });
   };
 

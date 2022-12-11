@@ -56,12 +56,20 @@ const UserList = () => {
   }, []);
 
   let handleSendFrequest = (item) => {
-    console.log(item);
     set(push(ref(db, "friendrequest")), {
       senderId: auth.currentUser.uid,
       sendername: auth.currentUser.displayName,
       receiverid: item.id,
       receivername: item.username,
+    });
+    set(push(ref(db, "notification/")), {
+      senderId: auth.currentUser.uid,
+      sendername: auth.currentUser.displayName,
+      receiverid: item.id,
+      receivername: item.username,
+    });
+    set(push(ref(db, "notificationLength/" + `${item.id}`)), {
+      receiverid: item.id,
     });
   };
 

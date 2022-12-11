@@ -26,15 +26,26 @@ const Sidebar = ({ active }) => {
   };
 
   let handleNotification = () => {
-    remove(ref(db, "notificationLength/" + `${auth.currentUser.uid}`));
+    {
+      auth.currentUser &&
+        remove(ref(db, "notificationLength/" + `${auth.currentUser.uid}`));
+    }
   };
 
   useEffect(() => {
-    const groupRef = ref(db, "notificationLength/" + `${auth.currentUser.uid}`);
-    onValue(groupRef, (snapshot) => {
+    const notifiLength = ref(
+      db,
+      "notificationLength/" + `${auth.currentUser && auth.currentUser.uid}`
+    );
+    onValue(notifiLength, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (item.val().groupadminid == auth.currentUser.uid) {
+        if (
+          item.val().groupadminid == auth.currentUser.uid ||
+          item.val().blockId == auth.currentUser.uid ||
+          item.val().receiverid == auth.currentUser.uid ||
+          item.val().senderIdnotifi == auth.currentUser.uid
+        ) {
           arr.push(item.val());
         }
       });

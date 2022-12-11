@@ -54,6 +54,30 @@ const Friends = (props) => {
         }).then(() => {
           remove(ref(db, "friends/" + item.key));
         });
+
+    auth.currentUser.uid == item.senderId
+      ? set(push(ref(db, "notification/")), {
+          id: item.key,
+          block: item.receivername,
+          blockId: item.receiverid,
+          blockBy: item.sendername,
+          blockById: item.senderId,
+        })
+      : set(push(ref(db, "notification/")), {
+          id: item.key,
+          block: item.sendername,
+          blockId: item.senderId,
+          blockBy: item.receivername,
+          blockById: item.receiverid,
+        });
+
+    auth.currentUser.uid == item.senderId
+      ? set(push(ref(db, "notificationLength/" + `${item.receiverid}`)), {
+          blockId: item.receiverid,
+        })
+      : set(push(ref(db, "notificationLength/" + `${item.senderId}`)), {
+          blockId: item.senderId,
+        });
   };
 
   let handleActiveChat = (item) => {

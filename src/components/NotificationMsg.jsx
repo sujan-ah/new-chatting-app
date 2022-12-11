@@ -9,11 +9,18 @@ const NotificationMsg = () => {
   let [notificationMsg, setNotificationMsg] = useState([]);
 
   useEffect(() => {
-    const groupRef = ref(db, "notification");
-    onValue(groupRef, (snapshot) => {
+    const notificationRef = ref(db, "notification");
+    onValue(notificationRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (item.val().groupadminid == auth.currentUser.uid) {
+        console.log(item.val().id);
+        if (
+          item.val().groupadminid == auth.currentUser.uid ||
+          item.val().blockId == auth.currentUser.uid ||
+          item.val().receiverid == auth.currentUser.uid ||
+          item.val().senderIdnotifi == auth.currentUser.uid
+        ) {
+          console.log(item.val());
           arr.push(item.val());
         }
       });
@@ -30,10 +37,27 @@ const NotificationMsg = () => {
       ) : (
         notificationMsg.map((item) => (
           <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
-            <p className="font-nunito font-semibold text-base">
-              <b>{item.username}</b> send a request in your{" "}
-              <b>{item.groupname}</b> group
-            </p>
+            {item.username && (
+              <p className="font-nunito font-semibold text-base">
+                <b>{item.username}</b> send a request in your{" "}
+                <b>{item.groupname}</b> group
+              </p>
+            )}
+            {item.blockId && (
+              <p className="font-nunito font-semibold text-base">
+                <b>{item.blockBy}</b> blocked you
+              </p>
+            )}
+            {item.receiverid && (
+              <p className="font-nunito font-semibold text-base">
+                <b>{item.sendername}</b> send a friendrequest you
+              </p>
+            )}
+            {item.senderIdnotifi && (
+              <p className="font-nunito font-semibold text-base">
+                <b>{item.receivername}</b> Accepted Your friend Request
+              </p>
+            )}
           </div>
         ))
       )}

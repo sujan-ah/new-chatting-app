@@ -44,7 +44,9 @@ const Sidebar = ({ active }) => {
           item.val().groupadminid == auth.currentUser.uid ||
           item.val().blockId == auth.currentUser.uid ||
           item.val().receiverid == auth.currentUser.uid ||
-          item.val().senderIdnotifi == auth.currentUser.uid
+          item.val().senderIdnotifi == auth.currentUser.uid ||
+          item.val().senderunblockId == auth.currentUser.uid ||
+          item.val().useracceptid == auth.currentUser.uid
         ) {
           arr.push(item.val());
         }

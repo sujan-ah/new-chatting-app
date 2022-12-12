@@ -50,6 +50,17 @@ const BlockedUsers = () => {
     }).then(() => {
       remove(ref(db, "blockfriends/" + item.id));
     });
+
+    set(push(ref(db, "notification")), {
+      id: item.id,
+      senderunblockId: item.blockid,
+      sendername: item.block,
+      receiverunblockid: auth.currentUser.uid,
+      receivername: auth.currentUser.displayName,
+    });
+    set(push(ref(db, "notificationLength/" + `${item.blockid}`)), {
+      senderunblockId: item.blockid,
+    });
   };
 
   return (

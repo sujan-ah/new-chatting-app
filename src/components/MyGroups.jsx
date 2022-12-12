@@ -67,6 +67,21 @@ const MyGroups = () => {
     }).then(() => {
       remove(ref(db, "groupjoinreq/" + item.key));
     });
+
+    set(push(ref(db, "notification")), {
+      gid: item.gid,
+      groupadminacceptid: item.groupadminid,
+      groupname: item.groupname,
+      grouptag: item.grouptag,
+      key: item.key,
+      useracceptid: item.userid,
+      username: item.username,
+      userprofile: item.userprofile,
+    });
+
+    set(push(ref(db, "notificationLength/" + `${item.userid}`)), {
+      useracceptid: item.userid,
+    });
   };
 
   let handleMember = (member) => {

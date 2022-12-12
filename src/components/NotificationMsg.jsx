@@ -13,14 +13,14 @@ const NotificationMsg = () => {
     onValue(notificationRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        console.log(item.val().id);
         if (
           item.val().groupadminid == auth.currentUser.uid ||
           item.val().blockId == auth.currentUser.uid ||
           item.val().receiverid == auth.currentUser.uid ||
-          item.val().senderIdnotifi == auth.currentUser.uid
+          item.val().senderIdnotifi == auth.currentUser.uid ||
+          item.val().senderunblockId == auth.currentUser.uid ||
+          item.val().useracceptid == auth.currentUser.uid
         ) {
-          console.log(item.val());
           arr.push(item.val());
         }
       });
@@ -37,7 +37,7 @@ const NotificationMsg = () => {
       ) : (
         notificationMsg.map((item) => (
           <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
-            {item.username && (
+            {item.groupadminid && (
               <p className="font-nunito font-semibold text-base">
                 <b>{item.username}</b> send a request in your{" "}
                 <b>{item.groupname}</b> group
@@ -56,6 +56,16 @@ const NotificationMsg = () => {
             {item.senderIdnotifi && (
               <p className="font-nunito font-semibold text-base">
                 <b>{item.receivername}</b> Accepted Your friend Request
+              </p>
+            )}
+            {item.senderunblockId && (
+              <p className="font-nunito font-semibold text-base">
+                <b>{item.receivername}</b> Unblocked You
+              </p>
+            )}
+            {item.useracceptid && (
+              <p className="font-nunito font-semibold text-base">
+                <b>{item.groupname}</b> Joined You in the Group
               </p>
             )}
           </div>

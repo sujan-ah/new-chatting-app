@@ -101,7 +101,7 @@ const Friends = (props) => {
     friends.filter((item) => {
       if (e.target.value != "") {
         if (
-          item.receivername.toLowerCase().includes(e.target.value.toLowerCase())
+          item.sendername.toLowerCase().includes(e.target.value.toLowerCase())
         ) {
           arr.push(item);
         }

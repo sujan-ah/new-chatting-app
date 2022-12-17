@@ -1,12 +1,13 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
 
-const search = () => {
+const Search = ({ type }) => {
   return (
     <div className="relative ">
       <div className="flex">
         <FiSearch className="absolute top-5 ml-6 text-2xl mt-[-7px]" />
         <input
+          onChange={type}
           type="search"
           placeholder="search"
           className=" border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-20 py-3 font-nunito font-semibold text-base"
@@ -16,4 +17,4 @@ const search = () => {
   );
 };
 
-export default search;
+export default Search;

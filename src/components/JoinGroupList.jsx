@@ -82,7 +82,7 @@ const JoinGroupList = () => {
   return (
     <div className="mb-10 rounded-2xl p-10 h-[347px] overflow-y-scroll shadow-md">
       <Search type={handleSearch} />
-      <h1 className="font-nunito font-bold text-lg flex justify-between">
+      <h1 className="mt-10 font-nunito font-bold text-lg flex justify-between">
         Joined Group
       </h1>
       {jglist.length == 0 ? (

@@ -81,7 +81,7 @@ const Group = () => {
   return (
     <div className="mt-14 rounded-2xl p-10 h-[347px] overflow-y-scroll shadow-md">
       <Search type={handleSearch} />
-      <h1 className="font-nunito font-bold text-lg flex justify-between mt-5">
+      <h1 className="font-nunito font-bold text-lg flex justify-between mt-10">
         Groups List
         <button
           className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"

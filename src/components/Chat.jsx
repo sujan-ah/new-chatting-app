@@ -10,6 +10,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import Search from "./Search";
 
 const Chat = () => {
   const db = getDatabase();
@@ -22,6 +23,8 @@ const Chat = () => {
   let [show, setShow] = useState(false);
   let [file, setFile] = useState("");
   let [progress, setProgress] = useState("");
+  const [searchSinglemsglistlist, setSearchSinglemsglistlist] = useState([]);
+  const [searchGroupmsglist, setSearchGroupmsglist] = useState([]);
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -156,12 +159,38 @@ const Chat = () => {
     );
   };
 
+  let arr = [];
+  let handleSearch = (e) => {
+    if (data.status == "group") {
+      groupmsglist.filter((item) => {
+        console.log(item);
+        if (e.target.value != "") {
+          if (item.msg.toLowerCase().includes(e.target.value.toLowerCase())) {
+            arr.push(item);
+          }
+        }
+      });
+      setSearchGroupmsglist(arr);
+    } else {
+      singlemsglist.filter((item) => {
+        console.log(item);
+        if (e.target.value != "") {
+          if (item.msg.toLowerCase().includes(e.target.value.toLowerCase())) {
+            arr.push(item);
+          }
+        }
+      });
+      setSearchSinglemsglistlist(arr);
+    }
+  };
+
   return (
     <div className="text-black h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
       <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
         <div>
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
         </div>
+
         <div>
           <h1 className="font-nunito font-bold text-2xl ">
             {data.name ? data.name : "Select a group name or friend"}
@@ -170,80 +199,202 @@ const Chat = () => {
             Online
           </p>
         </div>
+
+        <div className="ml-72">
+          <Search type={handleSearch} />
+        </div>
       </div>
 
       <div className=" h-[68vh] overflow-y-scroll">
         {data.status == "group"
-          ? groupmsglist.map((item) =>
-              item.whosenderid == auth.currentUser.uid ? (
-                item.whoreceiverid == data.groupId && item.msg ? (
-                  <div className="mt-5 flex justify-end">
-                    <div>
-                      <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
-                        {item.whosendername}
-                      </p>
-                      <br />
-                      <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
-                        {item.msg}
-                      </p>
-                      <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
-                        {" "}
-                        {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  item.whoreceiverid == data.groupId && (
+          ? searchGroupmsglist == ""
+            ? groupmsglist.map((item) =>
+                item.whosenderid == auth.currentUser.uid ? (
+                  item.whoreceiverid == data.groupId && item.msg ? (
                     <div className="mt-5 flex justify-end">
                       <div>
                         <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
                           {item.whosendername}
                         </p>
                         <br />
-                        <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
-                          <picture>
-                            <img className="w-52 h-52" src={item.img} />
-                          </picture>
+                        <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
+                          {item.msg}
                         </p>
-                        <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                          {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                        <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                          {" "}
+                          {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                         </p>
                       </div>
                     </div>
+                  ) : (
+                    item.whoreceiverid == data.groupId && (
+                      <div className="mt-5 flex justify-end">
+                        <div>
+                          <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                            {item.whosendername}
+                          </p>
+                          <br />
+                          <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                            <picture>
+                              <img className="w-52 h-52" src={item.img} />
+                            </picture>
+                          </p>
+                          <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                            {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                          </p>
+                        </div>
+                      </div>
+                    )
                   )
-                )
-              ) : item.whoreceiverid == data.groupId && item.msg ? (
-                <div className="mt-5">
-                  <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
-                    {item.whosendername}
-                  </p>
-                  <br />
-                  <p className="font-nunito font-medium text-xl bg-[#F1F1F1] inline-block p-3.5 rounded-xl">
-                    {item.msg}
-                  </p>
-                  <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
-                    {" "}
-                    {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
-                  </p>
-                </div>
-              ) : (
-                item.whoreceiverid == data.groupId && (
-                  <div className="mt-5 ">
+                ) : item.whoreceiverid == data.groupId && item.msg ? (
+                  <div className="mt-5">
                     <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
                       {item.whosendername}
                     </p>
                     <br />
-                    <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-                      <img className="w-52 h-52" src={item.img} />
+                    <p className="font-nunito font-medium text-xl bg-[#F1F1F1] inline-block p-3.5 rounded-xl">
+                      {item.msg}
                     </p>
-                    <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
-                      {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                    <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                      {" "}
+                      {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                     </p>
                   </div>
+                ) : (
+                  item.whoreceiverid == data.groupId && (
+                    <div className="mt-5 ">
+                      <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                        {item.whosendername}
+                      </p>
+                      <br />
+                      <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                        <img className="w-52 h-52" src={item.img} />
+                      </p>
+                      <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                        {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                      </p>
+                    </div>
+                  )
                 )
               )
+            : searchGroupmsglist.map((item) =>
+                item.whosenderid == auth.currentUser.uid ? (
+                  item.whoreceiverid == data.groupId && item.msg ? (
+                    <div className="mt-5 flex justify-end">
+                      <div>
+                        <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                          {item.whosendername}
+                        </p>
+                        <br />
+                        <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
+                          {item.msg}
+                        </p>
+                        <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                          {" "}
+                          {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    item.whoreceiverid == data.groupId && (
+                      <div className="mt-5 flex justify-end">
+                        <div>
+                          <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                            {item.whosendername}
+                          </p>
+                          <br />
+                          <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                            <picture>
+                              <img className="w-52 h-52" src={item.img} />
+                            </picture>
+                          </p>
+                          <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                            {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  )
+                ) : item.whoreceiverid == data.groupId && item.msg ? (
+                  <div className="mt-5">
+                    <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                      {item.whosendername}
+                    </p>
+                    <br />
+                    <p className="font-nunito font-medium text-xl bg-[#F1F1F1] inline-block p-3.5 rounded-xl">
+                      {item.msg}
+                    </p>
+                    <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                      {" "}
+                      {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                    </p>
+                  </div>
+                ) : (
+                  item.whoreceiverid == data.groupId && (
+                    <div className="mt-5 ">
+                      <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                        {item.whosendername}
+                      </p>
+                      <br />
+                      <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                        <img className="w-52 h-52" src={item.img} />
+                      </p>
+                      <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                        {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                      </p>
+                    </div>
+                  )
+                )
+              )
+          : searchSinglemsglistlist == ""
+          ? singlemsglist.map((item) =>
+              item.whosenderid == auth.currentUser.uid ? (
+                item.msg ? (
+                  <div className="mt-5 flex justify-end">
+                    <div>
+                      <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                        {item.msg}
+                      </p>
+                      <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                        {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-5 flex justify-end">
+                    <div>
+                      <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
+                        <picture>
+                          <img className="w-52 h-52" src={item.img} />
+                        </picture>
+                      </p>
+                      <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                        {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                      </p>
+                    </div>
+                  </div>
+                )
+              ) : item.msg ? (
+                <div className="mt-5">
+                  <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                    {item.msg}
+                  </p>
+                  <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                    {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-5 ">
+                  <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
+                    <img className="w-52 h-52" src={item.img} />
+                  </p>
+                  <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
+                    {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                  </p>
+                </div>
+              )
             )
-          : singlemsglist.map((item) =>
+          : searchSinglemsglistlist.map((item) =>
               item.whosenderid == auth.currentUser.uid ? (
                 item.msg ? (
                   <div className="mt-5 flex justify-end">

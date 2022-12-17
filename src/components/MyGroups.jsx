@@ -121,7 +121,7 @@ const MyGroups = () => {
   return (
     <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
       <Search type={handleSearch} />
-      <h1 className="font-nunito font-bold text-lg mt-5">My Groups</h1>
+      <h1 className="font-nunito font-bold text-lg mt-10">My Groups</h1>
       {showinfo ? (
         <>
           <button

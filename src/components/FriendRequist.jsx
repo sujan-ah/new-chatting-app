@@ -8,11 +8,13 @@ import {
   remove,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import Search from "./Search";
 
 const FriendRequist = () => {
   const auth = getAuth();
   const db = getDatabase();
   const [friendreqshow, setFriendreqshow] = useState([]);
+  const [searchFriendreqshowlist, setSearchFriendreqshowlist] = useState([]);
 
   useEffect(() => {
     const usersRef = ref(db, "friendrequest/");
@@ -54,15 +56,57 @@ const FriendRequist = () => {
     });
   };
 
+  let arr = [];
+  let handleSearch = (e) => {
+    friendreqshow.filter((item) => {
+      if (e.target.value != "") {
+        if (
+          item.sendername.toLowerCase().includes(e.target.value.toLowerCase())
+        ) {
+          arr.push(item);
+        }
+      }
+    });
+    setSearchFriendreqshowlist(arr);
+  };
+
   return (
     <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
-      <h1 className="font-nunito font-bold text-lg">Friend Request</h1>
+      <Search type={handleSearch} />
+      <h1 className="font-nunito font-bold text-lg mt-5">Friend Request</h1>
       {friendreqshow.length == 0 ? (
         <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
           No Friend Request Available
         </p>
-      ) : (
+      ) : searchFriendreqshowlist == "" ? (
         friendreqshow.map((item) => (
+          <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
+            <div>
+              <img
+                src="images/groupimg.png"
+                className="w-16 h-16 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h1 className="font-nunito font-bold text-base">
+                {item.sendername}
+              </h1>
+              <p className="font-nunito font-semibold text-sm opacity-60">
+                Hi Guys, Wassup!
+              </p>
+            </div>
+            <div>
+              <button
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                onClick={() => handleAcceptFriendRequest(item)}
+              >
+                Accept
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        searchFriendreqshowlist.map((item) => (
           <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
             <div>
               <img

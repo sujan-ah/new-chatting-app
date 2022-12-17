@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import Search from "./Search";
 
 const Group = () => {
   let db = getDatabase();
@@ -10,6 +11,7 @@ const Group = () => {
   let [groupname, setGroupname] = useState("");
   let [grouptag, setGrouptag] = useState("");
   let [grouplist, setGrouplist] = useState("");
+  const [searchGrouplistlist, setSearchGrouplistlist] = useState([]);
 
   let handleGroup = () => {
     setCreategroup(!cgroup);
@@ -62,9 +64,24 @@ const Group = () => {
     });
   };
 
+  let arr = [];
+  let handleSearch = (e) => {
+    grouplist.filter((item) => {
+      if (e.target.value != "") {
+        if (
+          item.groupname.toLowerCase().includes(e.target.value.toLowerCase())
+        ) {
+          arr.push(item);
+        }
+      }
+    });
+    setSearchGrouplistlist(arr);
+  };
+
   return (
     <div className="mt-14 rounded-2xl p-10 h-[347px] overflow-y-scroll shadow-md">
-      <h1 className="font-nunito font-bold text-lg flex justify-between">
+      <Search type={handleSearch} />
+      <h1 className="font-nunito font-bold text-lg flex justify-between mt-5">
         Groups List
         <button
           className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
@@ -100,9 +117,41 @@ const Group = () => {
         <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
           No Groups Are Available
         </p>
-      ) : (
+      ) : searchGrouplistlist == "" ? (
         grouplist &&
         grouplist.map((item) => (
+          <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
+            <div>
+              <img
+                src="images/groupimg.png"
+                className="w-16 h-16 rounded-[50%]"
+              />
+            </div>
+            <div>
+              <h1 className="font-nunito font-bold text-base">
+                {item.groupname}{" "}
+                <span className="font-nunito font-semibold text-sm opacity-60">
+                  Admin: {item.groupadmin}
+                </span>
+              </h1>
+              <p className="font-nunito font-semibold text-sm opacity-60">
+                {item.grouptag}
+              </p>
+            </div>
+
+            <div>
+              <button
+                className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
+                onClick={() => handleJoinGroup(item)}
+              >
+                Join
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        searchGrouplistlist &&
+        searchGrouplistlist.map((item) => (
           <div className="flex justify-between mt-4 border-b pb-2.5 items-center">
             <div>
               <img

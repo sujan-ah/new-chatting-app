@@ -4,6 +4,9 @@ import { getDatabase, ref, set, push, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import moment from "moment/moment";
+import { BsEmojiSmile } from "react-icons/bs";
+import { IoMdClose } from "react-icons/io";
+import EmojiPicker from "emoji-picker-react";
 import {
   getStorage,
   ref as sref,
@@ -25,6 +28,7 @@ const Chat = () => {
   let [progress, setProgress] = useState("");
   const [searchSinglemsglistlist, setSearchSinglemsglistlist] = useState([]);
   const [searchGroupmsglist, setSearchGroupmsglist] = useState([]);
+  const [emmoji, setEmmoji] = useState(false);
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -44,6 +48,8 @@ const Chat = () => {
         date: `${new Date().getFullYear()}-${
           new Date().getMonth() + 1
         }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+      }).then(() => {
+        setMsg("");
       });
     } else {
       const db = getDatabase();
@@ -56,6 +62,8 @@ const Chat = () => {
         date: `${new Date().getFullYear()}-${
           new Date().getMonth() + 1
         }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+      }).then(() => {
+        setMsg("");
       });
     }
   };
@@ -163,7 +171,6 @@ const Chat = () => {
   let handleSearch = (e) => {
     if (data.status == "group") {
       groupmsglist.filter((item) => {
-        console.log(item);
         if (e.target.value != "") {
           if (item.msg.toLowerCase().includes(e.target.value.toLowerCase())) {
             arr.push(item);
@@ -173,7 +180,6 @@ const Chat = () => {
       setSearchGroupmsglist(arr);
     } else {
       singlemsglist.filter((item) => {
-        console.log(item);
         if (e.target.value != "") {
           if (item.msg.toLowerCase().includes(e.target.value.toLowerCase())) {
             arr.push(item);
@@ -443,12 +449,13 @@ const Chat = () => {
             )}
       </div>
 
-      <div>
+      <div className="relative">
         <input
           onChange={handleMsg}
           className="bg-[#F1F1F1] w-[80%] px-4 rounded py-2 mt-5"
           type="text"
           placeholder="Your Message"
+          value={msg}
         />
         <button
           onClick={handleMsgSend}
@@ -462,6 +469,23 @@ const Chat = () => {
         >
           Attachment
         </button>
+        <button
+          onClick={() => setEmmoji(!emmoji)}
+          className="absolute top-[27px] right-[255px] bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
+        >
+          <BsEmojiSmile />
+        </button>
+        <div className="absolute top-[-430px] right-[255px]">
+          {emmoji && (
+            <>
+              <EmojiPicker onEmojiClick={(a) => setMsg(msg + a.emoji)} />
+              <IoMdClose
+                onClick={() => setEmmoji(false)}
+                className="absolute top-0 right-0 text-2xl"
+              />
+            </>
+          )}
+        </div>
       </div>
       {show && (
         <div className="h-screen w-full bg-[rgba(0,0,0,.6)] absolute top-0 left-0 z-30 flex justify-center items-center ">

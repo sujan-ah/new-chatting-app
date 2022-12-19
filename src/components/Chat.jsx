@@ -4,7 +4,7 @@ import { getDatabase, ref, set, push, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import moment from "moment/moment";
-import { BsEmojiSmile } from "react-icons/bs";
+import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import EmojiPicker from "emoji-picker-react";
 import {
@@ -14,6 +14,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import Search from "./Search";
+import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 const Chat = () => {
   const db = getDatabase();
@@ -26,9 +27,10 @@ const Chat = () => {
   let [show, setShow] = useState(false);
   let [file, setFile] = useState("");
   let [progress, setProgress] = useState("");
-  const [searchSinglemsglistlist, setSearchSinglemsglistlist] = useState([]);
-  const [searchGroupmsglist, setSearchGroupmsglist] = useState([]);
-  const [emmoji, setEmmoji] = useState(false);
+  let [searchSinglemsglistlist, setSearchSinglemsglistlist] = useState([]);
+  let [searchGroupmsglist, setSearchGroupmsglist] = useState([]);
+  let [emmoji, setEmmoji] = useState(false);
+  let [audio, setAudio] = useState("");
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -188,6 +190,12 @@ const Chat = () => {
       });
       setSearchSinglemsglistlist(arr);
     }
+  };
+
+  const recorderControls = useAudioRecorder();
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    setAudio(url);
   };
 
   return (
@@ -449,39 +457,47 @@ const Chat = () => {
             )}
       </div>
 
+      <audio controls src={audio}></audio>
       <div className="relative">
         <input
           onChange={handleMsg}
-          className="bg-[#F1F1F1] w-[80%] px-4 rounded py-2 mt-5"
+          className="bg-[#F1F1F1] w-[80%] px-4 rounded py-3 mt-5"
           type="text"
           placeholder="Your Message"
           value={msg}
         />
+        <div className="absolute top-[24px] right-[300px]">
+          <AudioRecorder
+            onRecordingComplete={(blob) => addAudioElement(blob)}
+            recorderControls={recorderControls}
+          />
+        </div>
         <button
           onClick={handleMsgSend}
-          className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
+          className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-2"
         >
           Send
         </button>
         <button
           onClick={() => setShow(true)}
-          className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
+          className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-2"
         >
           Attachment
         </button>
         <button
           onClick={() => setEmmoji(!emmoji)}
-          className="absolute top-[27px] right-[255px] bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
+          className="absolute top-[25px] right-[250px] text-3xl text-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-1"
         >
-          <BsEmojiSmile />
+          <BsFillEmojiSmileFill />
         </button>
+
         <div className="absolute top-[-430px] right-[255px]">
           {emmoji && (
             <>
               <EmojiPicker onEmojiClick={(a) => setMsg(msg + a.emoji)} />
               <IoMdClose
                 onClick={() => setEmmoji(false)}
-                className="absolute top-0 right-0 text-2xl"
+                className="absolute top-0 right-0 text-2xl opacity-70"
               />
             </>
           )}

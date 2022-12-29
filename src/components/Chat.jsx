@@ -30,7 +30,8 @@ const Chat = () => {
   let [searchSinglemsglistlist, setSearchSinglemsglistlist] = useState([]);
   let [searchGroupmsglist, setSearchGroupmsglist] = useState([]);
   let [emmoji, setEmmoji] = useState(false);
-  let [audio, setAudio] = useState("");
+  let [audio, setAudio] = useState(false);
+  let [audioData, setAudioData] = useState("");
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -106,7 +107,6 @@ const Chat = () => {
 
   let handleImageUpload = () => {
     const singleImageRef = sref(storage, "singleimages/" + file.name);
-
     const uploadTask = uploadBytesResumable(singleImageRef, file);
     uploadTask.on(
       "state_changed",
@@ -129,7 +129,6 @@ const Chat = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-
           if (file !== "") {
             if (data.status == "group") {
               console.log("ami group msg");
@@ -196,6 +195,73 @@ const Chat = () => {
   const addAudioElement = (blob) => {
     const url = URL.createObjectURL(blob);
     setAudio(url);
+    setAudioData(blob);
+  };
+
+  let handleAudioUpload = () => {
+    const audioRef = sref(storage, "audios/" + audioData.type);
+    const uploadTask = uploadBytesResumable(audioRef, audioData);
+    console.log(uploadTask);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          if (audio !== "") {
+            if (data.status == "group") {
+              console.log("ami group msg");
+              const db = getDatabase();
+              set(push(ref(db, "groupmsg")), {
+                whosenderid: auth.currentUser.uid,
+                whosendername: auth.currentUser.displayName,
+                whoreceiverid: data.groupId,
+                whoreceivername: data.name,
+                audio: downloadURL,
+                date: `${new Date().getFullYear()}-${
+                  new Date().getMonth() + 1
+                }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+              }).then(() => {
+                setShow(false);
+                setProgress("");
+                setAudio(false);
+              });
+            } else {
+              const db = getDatabase();
+              set(push(ref(db, "singlemsg")), {
+                whosenderid: auth.currentUser.uid,
+                whosendername: auth.currentUser.displayName,
+                whoreceiverid: data.id,
+                whoreceivername: data.name,
+                audio: downloadURL,
+                date: `${new Date().getFullYear()}-${
+                  new Date().getMonth() + 1
+                }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+              }).then(() => {
+                setShow(false);
+                setProgress("");
+                setAudio(false);
+              });
+            }
+          }
+        });
+      }
+    );
   };
 
   return (
@@ -240,6 +306,27 @@ const Chat = () => {
                         </p>
                       </div>
                     </div>
+                  ) : item.whoreceiverid == data.groupId && item.audio ? (
+                    <div className="mt-5 flex justify-end">
+                      <div>
+                        <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                          {item.whosendername}
+                        </p>
+                        <br />
+                        <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
+                          <audio
+                            className="text-red"
+                            controls
+                            src={item.audio}
+                          ></audio>
+                        </p>
+
+                        <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                          {" "}
+                          {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                        </p>
+                      </div>
+                    </div>
                   ) : (
                     item.whoreceiverid == data.groupId && (
                       <div className="mt-5 flex justify-end">
@@ -269,6 +356,22 @@ const Chat = () => {
                     <p className="font-nunito font-medium text-xl bg-[#F1F1F1] inline-block p-3.5 rounded-xl">
                       {item.msg}
                     </p>
+                    <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                      {" "}
+                      {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                    </p>
+                  </div>
+                ) : item.whoreceiverid == data.groupId && item.audio ? (
+                  <div className="mt-5">
+                    <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                      {item.whosendername}
+                    </p>
+                    <br />
+                    <audio
+                      className="text-red"
+                      controls
+                      src={item.audio}
+                    ></audio>
                     <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
                       {" "}
                       {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
@@ -374,6 +477,27 @@ const Chat = () => {
                       </p>
                     </div>
                   </div>
+                ) : item.audio ? (
+                  <div className="mt-5 flex justify-end">
+                    <div>
+                      <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                        {item.whosendername}
+                      </p>
+                      <br />
+                      <p className="font-nunito font-medium text-xl text-white bg-primary inline-block p-3.5 rounded-xl">
+                        <audio
+                          className="text-red"
+                          controls
+                          src={item.audio}
+                        ></audio>
+                      </p>
+
+                      <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                        {" "}
+                        {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
+                      </p>
+                    </div>
+                  </div>
                 ) : (
                   <div className="mt-5 flex justify-end">
                     <div>
@@ -395,6 +519,18 @@ const Chat = () => {
                   </p>
                   <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
                     {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
+                  </p>
+                </div>
+              ) : item.audio ? (
+                <div className="mt-5">
+                  <p className="font-nunito font-medium text-xl text-[#bebebe]  inline-block  rounded-xl">
+                    {item.whosendername}
+                  </p>
+                  <br />
+                  <audio className="text-red" controls src={item.audio}></audio>
+                  <p className="font-nunito font-medium text-sm text-[#bebebe] mt-1">
+                    {" "}
+                    {moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                   </p>
                 </div>
               ) : (
@@ -457,7 +593,24 @@ const Chat = () => {
             )}
       </div>
 
-      <audio controls src={audio}></audio>
+      {audio && (
+        <>
+          <audio controls src={audio}></audio>
+          <button
+            onClick={handleAudioUpload}
+            className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-2"
+          >
+            Send
+          </button>
+
+          <button
+            onClick={() => setAudio(false)}
+            className="bg-primary ml-2.5	 text-white font-nunito font-bold text-lg rounded p-2"
+          >
+            Remove
+          </button>
+        </>
+      )}
       <div className="relative">
         <input
           onChange={handleMsg}

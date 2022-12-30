@@ -32,6 +32,8 @@ const Chat = () => {
   let [emmoji, setEmmoji] = useState(false);
   let [audio, setAudio] = useState(false);
   let [audioData, setAudioData] = useState("");
+  let [openImgPopup, setOpenImgPopup] = useState(false);
+  let [popupImg, setPopupImg] = useState([]);
 
   let data = useSelector((state) => state.activeChat.value);
 
@@ -264,8 +266,13 @@ const Chat = () => {
     );
   };
 
+  let handleImagePopup = (img) => {
+    setPopupImg(img);
+    setOpenImgPopup(true);
+  };
+
   return (
-    <div className="text-black h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
+    <div className="relative text-black h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
       <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
         <div>
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
@@ -337,7 +344,11 @@ const Chat = () => {
                           <br />
                           <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
                             <picture>
-                              <img className="w-52 h-52" src={item.img} />
+                              <img
+                                onClick={() => handleImagePopup(item.img)}
+                                className="w-52 h-52"
+                                src={item.img}
+                              />
                             </picture>
                           </p>
                           <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
@@ -385,7 +396,11 @@ const Chat = () => {
                       </p>
                       <br />
                       <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-                        <img className="w-52 h-52" src={item.img} />
+                        <img
+                          onClick={() => handleImagePopup(item.img)}
+                          className="w-52 h-52"
+                          src={item.img}
+                        />
                       </p>
                       <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
                         {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
@@ -679,6 +694,18 @@ const Chat = () => {
             >
               Cancel
             </button>
+          </div>
+        </div>
+      )}
+
+      {openImgPopup && (
+        <div className="absolute top-0 left-52  w-[800px] h-auto bg-white text-center p-10 rounded-lg shadow-xl">
+          <IoMdClose
+            onClick={() => setOpenImgPopup(false)}
+            className="absolute top-0 right-0 text-2xl opacity-70"
+          />
+          <div className="flex justify-between">
+            <img src={popupImg} alt="" />
           </div>
         </div>
       )}

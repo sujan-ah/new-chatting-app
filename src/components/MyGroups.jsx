@@ -10,8 +10,10 @@ import {
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import Search from "./Search";
+import { useSelector } from "react-redux";
 
 const MyGroups = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   let db = getDatabase();
   const auth = getAuth();
 
@@ -119,7 +121,13 @@ const MyGroups = () => {
   };
 
   return (
-    <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
+    <div
+      className={
+        data2
+          ? "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md "
+      }
+    >
       <Search type={handleSearch} />
       <h1 className="font-nunito font-bold text-lg mt-10">My Groups</h1>
       {showinfo ? (

@@ -9,8 +9,10 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Search from "./Search";
+import { useSelector } from "react-redux";
 
 const BlockedUsers = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   const auth = getAuth();
   const db = getDatabase();
   const [blockfriends, setBlockfriends] = useState([]);
@@ -78,7 +80,13 @@ const BlockedUsers = () => {
   };
 
   return (
-    <div className="mt-11 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
+    <div
+      className={
+        data2
+          ? "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md "
+      }
+    >
       <Search type={handleSearch} />
       <h1 className="font-nunito font-bold text-lg mt-10">Blocked Users</h1>
       {blockfriends.length == 0 ? (

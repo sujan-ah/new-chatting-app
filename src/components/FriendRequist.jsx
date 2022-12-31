@@ -9,8 +9,10 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Search from "./Search";
+import { useSelector } from "react-redux";
 
 const FriendRequist = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   const auth = getAuth();
   const db = getDatabase();
   const [friendreqshow, setFriendreqshow] = useState([]);
@@ -71,7 +73,13 @@ const FriendRequist = () => {
   };
 
   return (
-    <div className="mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md">
+    <div
+      className={
+        data2
+          ? "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md "
+      }
+    >
       <Search type={handleSearch} />
       <h1 className="font-nunito font-bold text-lg mt-10">Friend Request</h1>
       {friendreqshow.length == 0 ? (

@@ -6,8 +6,10 @@ import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { activeChat } from "../slices/activeChat";
 import Search from "./Search";
+import { useSelector } from "react-redux";
 
 const JoinGroupList = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   let db = getDatabase();
   const auth = getAuth();
   const dispatch = useDispatch();
@@ -80,7 +82,13 @@ const JoinGroupList = () => {
   };
 
   return (
-    <div className="mb-10 rounded-2xl p-10 h-[347px] overflow-y-scroll shadow-md">
+    <div
+      className={
+        data2
+          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+      }
+    >
       <Search type={handleSearch} />
       <h1 className="mt-10 font-nunito font-bold text-lg flex justify-between">
         Joined Group

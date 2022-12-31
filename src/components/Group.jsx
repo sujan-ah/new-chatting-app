@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Search from "./Search";
+import { useSelector } from "react-redux";
 
 const Group = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   let db = getDatabase();
   const auth = getAuth();
 
@@ -79,7 +81,13 @@ const Group = () => {
   };
 
   return (
-    <div className="mt-14 rounded-2xl p-10 h-[347px] overflow-y-scroll shadow-md">
+    <div
+      className={
+        data2
+          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+      }
+    >
       <Search type={handleSearch} />
       <h1 className="font-nunito font-bold text-lg flex justify-between mt-10">
         Groups List
@@ -96,14 +104,21 @@ const Group = () => {
           <input
             type="text"
             placeholder="Group Name"
-            className="w-full mt-8 border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-10 py-3 font-nunito font-semibold text-base"
+            className={
+              data2
+                ? "w-full mt-8 border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-10 py-3 font-nunito font-semibold text-base text-black"
+                : "w-full mt-8 border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-10 py-3 font-nunito font-semibold text-base "
+            }
             onChange={(e) => setGroupname(e.target.value)}
           />
-
           <input
             type="text"
             placeholder="Group Tagline"
-            className="w-full mt-4 border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-10 py-3 font-nunito font-semibold text-base"
+            className={
+              data2
+                ? "w-full mt-4 border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-10 py-3 font-nunito font-semibold text-base text-black"
+                : "w-full mt-4 border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-10 py-3 font-nunito font-semibold text-base "
+            }
             onChange={(e) => setGrouptag(e.target.value)}
           />
           <button

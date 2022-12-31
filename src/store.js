@@ -4,5 +4,6 @@ import activeChatSlice from "./slices/activeChat.js";
 export default configureStore({
   reducer: {
     activeChat: activeChatSlice,
+    darkmood: activeChatSlice,
   },
 });

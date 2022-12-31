@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Search from "./Search";
+import { useSelector } from "react-redux";
 
 const UserList = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   const auth = getAuth();
   const db = getDatabase();
   const [userlist, setUserlist] = useState([]);
@@ -90,7 +92,13 @@ const UserList = () => {
   };
 
   return (
-    <div className=" rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md">
+    <div
+      className={
+        data2
+          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+      }
+    >
       <Search type={handleSearch} />
       <h1 className="font-nunito font-bold text-lg mt-10">User List</h1>
 

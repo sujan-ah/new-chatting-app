@@ -36,6 +36,8 @@ const Chat = () => {
   let [popupImg, setPopupImg] = useState([]);
 
   let data = useSelector((state) => state.activeChat.value);
+  let data2 = useSelector((state) => state.darkmood.value2);
+  console.log(data2);
 
   let handleMsg = (e) => {
     setMsg(e.target.value);
@@ -279,12 +281,25 @@ const Chat = () => {
         </div>
 
         <div>
-          <h1 className="font-nunito font-bold text-2xl ">
-            {data.name ? data.name : "Select a group name or friend"}
-          </h1>
-          <p className="font-nunito font-semibold text-sm opacity-60 ">
-            Online
-          </p>
+          {data2 ? (
+            <>
+              <h1 className="font-nunito font-bold text-2xl text-white">
+                {data.name ? data.name : "Select a group name or friend"}
+              </h1>
+              <p className="font-nunito font-semibold text-white text-sm opacity-60 ">
+                Online
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="font-nunito font-bold text-2xl">
+                {data.name ? data.name : "Select a group name or friend"}
+              </h1>
+              <p className="font-nunito font-semibold text-sm opacity-60 ">
+                Online
+              </p>
+            </>
+          )}
         </div>
 
         <div className="ml-72">
@@ -704,7 +719,7 @@ const Chat = () => {
             onClick={() => setOpenImgPopup(false)}
             className="absolute top-0 right-0 text-2xl opacity-70"
           />
-          <div className="flex justify-between">
+          <div>
             <img src={popupImg} alt="" />
           </div>
         </div>

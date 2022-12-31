@@ -34,7 +34,6 @@ const Home = () => {
             <Sidebar active="home" />
           </div>
           <div className="xl:w-[540px]">
-            <Search />
             <Group />
             <FriendRequist />
           </div>

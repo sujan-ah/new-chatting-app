@@ -37,7 +37,6 @@ const Chat = () => {
 
   let data = useSelector((state) => state.activeChat.value);
   let data2 = useSelector((state) => state.darkmood.value2);
-  console.log(data2);
 
   let handleMsg = (e) => {
     setMsg(e.target.value);
@@ -274,40 +273,48 @@ const Chat = () => {
   };
 
   return (
-    <div className="relative text-black h-[87vh] p-4 border-l border-solid border-black shadow-md  rounded-2xl">
+    <div
+      className={
+        data2
+          ? "relative text-black h-[97vh] p-4 border-l border-solid shadow-md border-black rounded-2xl shadow-indigo-500/50"
+          : "relative text-black h-[97vh] p-4 border-l border-solid border-black shadow-md rounded-2xl"
+      }
+    >
       <div className="flex gap-x-4 mt-4 border-b pb-2.5 items-center">
-        <div>
+        <picture>
           <img src="images/groupimg.png" className="w-16 h-16 rounded-[50%]" />
-        </div>
+        </picture>
 
-        <div>
-          {data2 ? (
-            <>
-              <h1 className="font-nunito font-bold text-2xl text-white">
-                {data.name ? data.name : "Select a group name or friend"}
-              </h1>
-              <p className="font-nunito font-semibold text-white text-sm opacity-60 ">
-                Online
-              </p>
-            </>
-          ) : (
-            <>
-              <h1 className="font-nunito font-bold text-2xl">
-                {data.name ? data.name : "Select a group name or friend"}
-              </h1>
-              <p className="font-nunito font-semibold text-sm opacity-60 ">
-                Online
-              </p>
-            </>
-          )}
-        </div>
+        <div className="flex justify-between">
+          <div>
+            {data2 ? (
+              <>
+                <h1 className="font-nunito font-bold text-2xl text-white">
+                  {data.name ? data.name : "Select a group name or friend"}
+                </h1>
+                <p className="font-nunito font-semibold text-white text-sm opacity-60 ">
+                  Online
+                </p>
+              </>
+            ) : (
+              <>
+                <h1 className="font-nunito font-bold text-2xl">
+                  {data.name ? data.name : "Select a group name or friend"}
+                </h1>
+                <p className="font-nunito font-semibold text-sm opacity-60 ">
+                  Online
+                </p>
+              </>
+            )}
+          </div>
 
-        <div className="ml-72">
-          <Search type={handleSearch} />
+          <div className="flex ml-80 mt-[-30px]">
+            <Search type={handleSearch} />
+          </div>
         </div>
       </div>
 
-      <div className=" h-[68vh] overflow-y-scroll">
+      <div className=" h-[74vh] overflow-y-scroll">
         {data.status == "group"
           ? searchGroupmsglist == ""
             ? groupmsglist.map((item) =>
@@ -533,7 +540,11 @@ const Chat = () => {
                     <div>
                       <p className="bg-primary text-white p-4 font-nunito font-semibold text-md rounded-xl inline-block">
                         <picture>
-                          <img className="w-52 h-52" src={item.img} />
+                          <img
+                            onClick={() => handleImagePopup(item.img)}
+                            className="w-52 h-52"
+                            src={item.img}
+                          />
                         </picture>
                       </p>
                       <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
@@ -566,7 +577,11 @@ const Chat = () => {
               ) : (
                 <div className="mt-5 ">
                   <p className="bg-[#F1F1F1] p-4 font-nunito font-semibold text-md rounded-xl  inline-block">
-                    <img className="w-52 h-52" src={item.img} />
+                    <img
+                      onClick={() => handleImagePopup(item.img)}
+                      className="w-52 h-52"
+                      src={item.img}
+                    />
                   </p>
                   <p className="font-nunito font-semibold text-sm opacity-60 mt-1">
                     {moment(item.date, "YYYYMMDD, h:mm").fromNow()}
@@ -641,7 +656,7 @@ const Chat = () => {
           </button>
         </>
       )}
-      <div className="relative">
+      <div className="relative mt-0">
         <input
           onChange={handleMsg}
           className="bg-[#F1F1F1] w-[80%] px-4 rounded py-3 mt-5"

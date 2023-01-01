@@ -10,11 +10,11 @@ const Message = () => {
       <div className="max-w-[186px]">
         <Sidebar active="message" />
       </div>
-      <div className="w-[427px] mt-10">
+      <div className="w-[540px]">
         <JoinGroupList />
         <Friends />
       </div>
-      <div className="w-[1235px] mt-10">
+      <div className="w-[1080px]">
         <Chat />
       </div>
     </div>

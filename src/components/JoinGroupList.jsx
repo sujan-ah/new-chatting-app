@@ -85,14 +85,14 @@ const JoinGroupList = () => {
     <div
       className={
         data2
-          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
-          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50 mb-10"
+          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md mb-10 "
       }
     >
-      <Search type={handleSearch} />
-      <h1 className="mt-10 font-nunito font-bold text-lg flex justify-between">
-        Joined Group
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="font-nunito font-bold text-xl mt-10">Joined Group</h1>
+        <Search type={handleSearch} />
+      </div>
       {jglist.length == 0 ? (
         <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
           No Created Groups Are Available

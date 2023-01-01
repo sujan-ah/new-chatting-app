@@ -4,13 +4,13 @@ import { FiSearch } from "react-icons/fi";
 const Search = ({ type }) => {
   return (
     <div className="relative ">
-      <div className="flex">
-        <FiSearch className="absolute top-5 ml-6 text-2xl mt-[-7px]" />
+      <div className="flex mt-8 ">
+        <FiSearch className="absolute top-[53px] ml-5 text-md mt-[-7px]" />
         <input
           onChange={type}
           type="search"
           placeholder="search"
-          className=" border border-solid shadow-md rounded-2xl w-full xl:w-[427px] px-20 py-3 font-nunito font-semibold text-base"
+          className="text-black border border-solid shadow-md rounded-2xl w-full xl:w-[227px] px-10 py-2 font-nunito font-semibold text-base "
         />
       </div>
     </div>

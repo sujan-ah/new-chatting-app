@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import Search from "../../components/Search";
 import Group from "../../components/Group";
 import Friends from "../../components/Friends";
 import FriendRequist from "../../components/FriendRequist";

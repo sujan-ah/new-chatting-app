@@ -1,4 +1,3 @@
-import React from "react";
 import NotificationMsg from "../../components/NotificationMsg";
 import Sidebar from "../../components/Sidebar";
 

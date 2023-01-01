@@ -134,10 +134,10 @@ const Sidebar = ({ active }) => {
           </Link>
         </div>
 
-        <AiOutlineSetting className="text-3xl xl:text-5xl text-white " />
+        <AiOutlineSetting className="hidden  text-3xl xl:text-5xl text-white " />
         <HiOutlineLogout
           onClick={handleLogout}
-          className="text-3xl xl:text-5xl text-white xl:mt-32"
+          className="text-3xl xl:text-5xl text-white xl:mt-52"
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { FiEyeOff, FiEye } from "react-icons/fi";
+import { AiTwotoneEye } from "react-icons/ai";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,11 +13,14 @@ import { RotatingLines } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getDatabase, ref, set } from "firebase/database";
+import { useSelector } from "react-redux";
 
 const Registration = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   const db = getDatabase();
   const navigate = useNavigate();
   const auth = getAuth();
+
   let [email, setEmail] = useState("");
   let [name, setName] = useState("");
   let [password, setPassword] = useState("");
@@ -142,13 +146,19 @@ const Registration = () => {
   return (
     <div>
       <div className="flex">
-        <ToastContainer position="top-left" theme="dark" />
+        <ToastContainer position="top-left" theme={data2 ? "light" : "dark"} />
         <div className="sml:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
           <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
             <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start">
               Get started with easily register
             </h2>
-            <p className="font-nunito font-regular text-xl sml:text-base mt-3 text-purpal opacity-60 text-center sml:text-start">
+            <p
+              className={
+                data2
+                  ? "font-nunito font-regular text-xl sml:text-base mt-3 text-white opacity-60 text-center sml:text-start"
+                  : "font-nunito font-regular text-xl sml:text-base mt-3 text-purpal opacity-60 text-center sml:text-start"
+              }
+            >
               Free register and you can enjoy it
             </p>
 
@@ -160,11 +170,21 @@ const Registration = () => {
               )}
               <div className="relative mt-8 xl:mt-14">
                 <input
-                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className={
+                    data2
+                      ? "border border-solid border-white rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
+                      : "border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  }
                   type="email"
                   onChange={handleEmail}
                 />
-                <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90 ">
+                <p
+                  className={
+                    data2
+                      ? "font-nunito font-semibold text-sm text-white absolute top-[-8px] left-14 bg-black px-5 opacity-90"
+                      : "font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90"
+                  }
+                >
                   Email Address
                 </p>
               </div>
@@ -176,11 +196,21 @@ const Registration = () => {
 
               <div className="relative mt-8 xl:mt-14">
                 <input
-                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className={
+                    data2
+                      ? "border border-solid border-white rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
+                      : "border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  }
                   type="text"
                   onChange={handleName}
                 />
-                <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90">
+                <p
+                  className={
+                    data2
+                      ? "font-nunito font-semibold text-sm text-white absolute top-[-8px] left-14 bg-black px-5 opacity-90"
+                      : "font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90"
+                  }
+                >
                   Full name
                 </p>
               </div>
@@ -192,17 +222,27 @@ const Registration = () => {
 
               <div className="relative mt-8 xl:mt-14">
                 <input
-                  className="border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className={
+                    data2
+                      ? "border border-solid border-white rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
+                      : "border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  }
                   type={eyeopen ? "text" : "password"}
                   onChange={handlePassword}
                 />
-                <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90">
+                <p
+                  className={
+                    data2
+                      ? "font-nunito font-semibold text-sm text-white absolute top-[-8px] left-14 bg-black px-5 opacity-90"
+                      : "font-nunito font-semibold text-sm text-purpal absolute top-[-8px] left-14 bg-white px-5 opacity-90"
+                  }
+                >
                   Password
                 </p>
                 {eyeopen ? (
                   <FiEye
                     onClick={handleEye}
-                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                    className="absolute top-9 right-6 sml:top-7 xl:!top-9 "
                   />
                 ) : (
                   <FiEyeOff
@@ -239,7 +279,13 @@ const Registration = () => {
                 </button>
               )}
 
-              <p className=" font-semibold text-center mt-5 xl:mt-9 text-blue text-sm lg:text-base">
+              <p
+                className={
+                  data2
+                    ? " font-semibold text-center mt-5 xl:mt-9 text-white text-sm lg:text-base"
+                    : " font-semibold text-center mt-5 xl:mt-9 text-blue text-sm lg:text-base"
+                }
+              >
                 Already have an account ?
                 <Link to="/login" className="text-[#EA6C00] font-bold">
                   {" "}

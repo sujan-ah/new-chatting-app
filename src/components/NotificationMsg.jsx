@@ -36,7 +36,7 @@ const NotificationMsg = () => {
       className={
         data2
           ? "rounded-2xl p-10 w-[1100px] h-[885px] overflow-y-scroll shadow-md shadow-indigo-500/50 mb-10"
-          : "rounded-2xl p-10 w-[1200px] h-[885px] overflow-y-scroll shadow-md mb-10 "
+          : "rounded-2xl p-10 w-[1100px] h-[885px] overflow-y-scroll shadow-md mb-10 "
       }
     >
       {notificationMsg.length == 0 ? (

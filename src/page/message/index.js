@@ -1,4 +1,3 @@
-import React from "react";
 import Chat from "../../components/Chat";
 import Friends from "../../components/Friends";
 import JoinGroupList from "../../components/JoinGroupList";

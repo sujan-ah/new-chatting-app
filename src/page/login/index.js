@@ -12,11 +12,15 @@ import { useNavigate } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   const navigate = useNavigate();
   const auth = getAuth();
+  console.log(auth.currentUser);
   const provider = new GoogleAuthProvider();
+
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [eyeopen, setEyeopen] = useState(false);
@@ -68,7 +72,7 @@ const Login = () => {
   return (
     <div>
       <div className="flex">
-        <ToastContainer position="top-left" theme="dark" />
+        <ToastContainer position="top-left" theme={data2 ? "light" : "dark"} />
         <div className="sml:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
           <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
             {err && (
@@ -86,29 +90,55 @@ const Login = () => {
                 className="xl:w-3/5 h-auto flex border px-8 py-5 rounded-lg xl:mt-10 mt-5  ml-auto mr-auto sml:ml-0 sml:mr-0"
               >
                 <FcGoogle className="text-2xl" />
-                <p className="font-nunito font-bold text-blue text-sm ml-2.5 mt-[2px]">
+                <p
+                  className={
+                    data2
+                      ? "font-nunito font-bold text-white text-sm ml-2.5 mt-[2px]"
+                      : "font-nunito font-bold text-blue text-sm ml-2.5 mt-[2px]"
+                  }
+                >
                   Login with Google
                 </p>
               </button>
 
               <div className="relative mt-14">
                 <input
-                  className="border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className={
+                    data2
+                      ? "border-b border-solid border-white w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 bg-black"
+                      : "border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  }
                   type="email"
                   onChange={handleEmail}
                 />
-                <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px]  bg-white opacity-90 ">
+                <p
+                  className={
+                    data2
+                      ? "font-nunito font-semibold text-sm text-white absolute top-[-8px]  bg-black opacity-90 "
+                      : "font-nunito font-semibold text-sm text-purpal absolute top-[-8px]  bg-white opacity-90 "
+                  }
+                >
                   Email Address
                 </p>
               </div>
 
               <div className="relative mt-14">
                 <input
-                  className="border-b border-solid border-purpal w-full  py-7 sml:py-4  xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  className={
+                    data2
+                      ? "border-b border-solid border-white w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 bg-black"
+                      : "border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                  }
                   type={eyeopen ? "text" : "password"}
                   onChange={handlePassword}
                 />
-                <p className="font-nunito font-semibold text-sm text-purpal absolute top-[-8px] bg-white  opacity-90">
+                <p
+                  className={
+                    data2
+                      ? "font-nunito font-semibold text-sm text-white absolute top-[-8px]  bg-black opacity-90 "
+                      : "font-nunito font-semibold text-sm text-purpal absolute top-[-8px]  bg-white opacity-90 "
+                  }
+                >
                   Password
                 </p>
 
@@ -146,7 +176,13 @@ const Login = () => {
                 </button>
               )}
 
-              <p className="px-5 font-semibold  mt-9 text-blue">
+              <p
+                className={
+                  data2
+                    ? "px-5 font-semibold mt-9 text-white"
+                    : "px-5 font-semibold mt-9 text-blue"
+                }
+              >
                 Don’t have an account ?
                 <Link to="/registration" className="text-[#EA6C00] font-bold">
                   {" "}

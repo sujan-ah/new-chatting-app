@@ -120,8 +120,11 @@ const Friends = (props) => {
           : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
       }
     >
-      <Search type={handleSearch} />
-      <h1 className="font-nunito font-bold text-lg mt-10">Friends</h1>
+      <div className="flex justify-between">
+        <h1 className="font-nunito font-bold text-xl mt-10">Friends</h1>
+        <Search type={handleSearch} />
+      </div>
+
       {friends.length == 0 ? (
         <p className="bg-green-600 p-2.5 rounded-md text-center text-white text-2xl font-nunito mt-4">
           No Friends Are Available

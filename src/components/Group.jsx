@@ -88,16 +88,16 @@ const Group = () => {
           : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
       }
     >
-      <Search type={handleSearch} />
-      <h1 className="font-nunito font-bold text-lg flex justify-between mt-10">
-        Groups List
-        <button
-          className="bg-primary text-white font-nunito font-bold text-lg rounded p-1"
-          onClick={handleGroup}
-        >
-          {cgroup ? "Go back" : "Create Group"}
-        </button>
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="font-nunito font-bold text-xl mt-10">Groups List</h1>
+        <Search type={handleSearch} />
+      </div>
+      <button
+        className="bg-primary text-white font-nunito font-bold text-lg rounded p-1 mt-5 mb-5 ml-80"
+        onClick={handleGroup}
+      >
+        {cgroup ? "Go back" : "Create Group"}
+      </button>
 
       {cgroup ? (
         <>

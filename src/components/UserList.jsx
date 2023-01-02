@@ -95,12 +95,14 @@ const UserList = () => {
     <div
       className={
         data2
-          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
-          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+          ? "rounded-2xl p-2 xl:p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "rounded-2xl p-2 xl:p-10 h-[451px] overflow-y-scroll shadow-md "
       }
     >
-      <div className="flex justify-between">
-        <h1 className="font-nunito font-bold text-xl mt-10">User List</h1>
+      <div className="flex justify-between mb-10">
+        <h1 className="font-nunito font-bold text-xl xl:text-2xl mt-10">
+          User List
+        </h1>
         <Search type={handleSearch} />
       </div>
 
@@ -114,14 +116,14 @@ const UserList = () => {
             <div>
               <img
                 src={item.profile_picture}
-                className="w-16 h-16 rounded-[50%]"
+                className="w-12 h-12 xl:w-16 xl:h-16 rounded-[50%]"
               />
             </div>
             <div>
               <h1 className="font-nunito font-bold text-base">
                 {item.username}
               </h1>
-              <p className="font-nunito font-semibold text-sm opacity-60">
+              <p className="font-nunito font-semibold text-[12px] xl:text-sm opacity-60">
                 {item.email}
               </p>
             </div>

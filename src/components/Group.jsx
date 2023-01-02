@@ -84,16 +84,18 @@ const Group = () => {
     <div
       className={
         data2
-          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
-          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+          ? "rounded-2xl p-2 xl:p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "rounded-2xl p-2 xl:p-10 h-[451px] overflow-y-scroll shadow-md "
       }
     >
       <div className="flex justify-between">
-        <h1 className="font-nunito font-bold text-xl mt-10">Groups List</h1>
+        <h1 className="font-nunito font-bold text-xl xl:text-2xl mt-10">
+          Groups List
+        </h1>
         <Search type={handleSearch} />
       </div>
       <button
-        className="bg-primary text-white font-nunito font-bold text-lg rounded p-1 mt-5 mb-5 ml-80"
+        className="bg-primary text-white font-nunito font-bold text-md xl:text-lg rounded p-1 mt-5 mb-5 xl:ml-80"
         onClick={handleGroup}
       >
         {cgroup ? "Go back" : "Create Group"}
@@ -139,13 +141,13 @@ const Group = () => {
             <div>
               <img
                 src="images/groupimg.png"
-                className="w-16 h-16 rounded-[50%]"
+                className="w-12 h-12 xl:w-16 xl:h-16 rounded-[50%]"
               />
             </div>
             <div>
               <h1 className="font-nunito font-bold text-base">
                 {item.groupname}{" "}
-                <span className="font-nunito font-semibold text-sm opacity-60">
+                <span className="font-nunito font-semibold text-[12px] xl:text-sm opacity-60">
                   Admin: {item.groupadmin}
                 </span>
               </h1>

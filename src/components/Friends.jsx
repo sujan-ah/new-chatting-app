@@ -116,12 +116,14 @@ const Friends = (props) => {
     <div
       className={
         data2
-          ? "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
-          : "rounded-2xl p-10 h-[451px] overflow-y-scroll shadow-md "
+          ? "rounded-2xl p-2 xl:p-10 h-[451px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "rounded-2xl p-2 xl:p-10 h-[451px] overflow-y-scroll shadow-md "
       }
     >
-      <div className="flex justify-between">
-        <h1 className="font-nunito font-bold text-xl mt-10">Friends</h1>
+      <div className="flex justify-between mb-10">
+        <h1 className="font-nunito font-bold text-xl xl:text-2xl mt-10">
+          Friends
+        </h1>
         <Search type={handleSearch} />
       </div>
 
@@ -138,7 +140,7 @@ const Friends = (props) => {
             <div>
               <img
                 src="images/groupimg.png"
-                className="w-16 h-16 rounded-[50%]"
+                className="w-12 h-12 xl:w-16 xl:h-16 rounded-[50%]"
               />
             </div>
             <div>
@@ -152,7 +154,7 @@ const Friends = (props) => {
               </p>
             </div>
             <div>
-              <p className="font-nunito font-semibold text-sm opacity-60">
+              <p className="font-nunito font-semibold text-[10px] xl:text-sm opacity-60">
                 Today, 8:56pm
               </p>
             </div>

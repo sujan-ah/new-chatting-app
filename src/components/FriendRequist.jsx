@@ -76,12 +76,14 @@ const FriendRequist = () => {
     <div
       className={
         data2
-          ? "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md shadow-indigo-500/50"
-          : "mt-10 rounded-2xl p-10 h-[462px] overflow-y-scroll shadow-md "
+          ? "mt-10 rounded-2xl p-2 xl:p-10 h-[462px] overflow-y-scroll shadow-md shadow-indigo-500/50"
+          : "mt-10 rounded-2xl p-2 xl:p-10 h-[462px] overflow-y-scroll shadow-md "
       }
     >
-      <div className="flex justify-between">
-        <h1 className="font-nunito font-bold text-xl mt-10">Friend Request</h1>
+      <div className="flex justify-between mb-10">
+        <h1 className="font-nunito font-bold text-xl xl:text-2xl mt-10">
+          Friend Request
+        </h1>
         <Search type={handleSearch} />
       </div>
 
@@ -95,7 +97,7 @@ const FriendRequist = () => {
             <div>
               <img
                 src="images/groupimg.png"
-                className="w-16 h-16 rounded-[50%]"
+                className="w-12 h-12 xl:w-16 xl:h-16 rounded-[50%]"
               />
             </div>
             <div>

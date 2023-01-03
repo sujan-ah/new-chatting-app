@@ -56,7 +56,7 @@ const Sidebar = ({ active }) => {
   }, []);
 
   return (
-    <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-full ml-[-12px] xl:ml-0">
+    <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-[430px] sm:w-[750px] md:w-[780px] lg:w-[1040px] xl:w-full ml-[-12px] xl:ml-0">
       <div className="relative overflow-hidden w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%] group ">
         <img
           src={auth.currentUser && auth.currentUser.photoURL}

@@ -100,7 +100,7 @@ const UserList = () => {
       }
     >
       <div className="flex justify-between mb-10">
-        <h1 className="font-nunito font-bold text-xl xl:text-2xl mt-10">
+        <h1 className="font-nunito font-bold text-xl sml:text-2xl mt-10">
           User List
         </h1>
         <Search type={handleSearch} />
@@ -116,14 +116,14 @@ const UserList = () => {
             <div>
               <img
                 src={item.profile_picture}
-                className="w-12 h-12 xl:w-16 xl:h-16 rounded-[50%]"
+                className="w-12 h-12 sml:w-16 sml:h-16 rounded-[50%]"
               />
             </div>
             <div>
               <h1 className="font-nunito font-bold text-base">
                 {item.username}
               </h1>
-              <p className="font-nunito font-semibold text-[12px] xl:text-sm opacity-60">
+              <p className="font-nunito font-semibold text-[12px] sml:text-sm opacity-60">
                 {item.email}
               </p>
             </div>

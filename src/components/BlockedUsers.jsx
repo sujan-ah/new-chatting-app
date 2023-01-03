@@ -88,7 +88,7 @@ const BlockedUsers = () => {
       }
     >
       <div className="flex justify-between mb-10">
-        <h1 className="font-nunito font-bold text-xl xl:text-2xl mt-10">
+        <h1 className="font-nunito font-bold text-xl sml:text-2xl mt-10">
           Blocked Users
         </h1>
         <Search type={handleSearch} />
@@ -103,7 +103,7 @@ const BlockedUsers = () => {
             <div>
               <img
                 src="images/groupimg.png"
-                className="w-12 h-12 xl:w-16 xl:h-16 rounded-[50%]"
+                className="w-12 h-12 sml:w-16 sml:h-16 rounded-[50%]"
               />
             </div>
             <div>

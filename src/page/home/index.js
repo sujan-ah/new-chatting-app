@@ -28,11 +28,11 @@ const Home = () => {
   return (
     <>
       {varify ? (
-        <div className="xl:flex justify-between p-5 xl:p-0">
+        <div className="xl:flex justify-between ">
           <div className="xl:w-[186px] ">
             <Sidebar active="home" />
           </div>
-          <div className="xl:w-[540px]">
+          <div className="xl:w-[540px] ">
             <Group />
             <FriendRequist />
           </div>

@@ -80,7 +80,7 @@ const Login = () => {
                 {err}
               </p>
             )}
-            <h2 className="font-nunito font-bold text-4xl sm:text-3xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[110px] text-center sm:text-start sml:text-start xl:text-start mt-5 sm:mt-4  lg:mt-0">
+            <h2 className="font-nunito font-bold text-4xl sm:text-3xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[110px] text-center sm:text-start sml:text-start xl:text-start mt-5 sm:mt-14  lg:mt-0">
               Login to your account!
             </h2>
 
@@ -101,7 +101,7 @@ const Login = () => {
                 </p>
               </button>
 
-              <div className="relative mt-14 extsm:mt-16 sm:mt-8 md:mt-16 lg:mt-16 xl:mt-16">
+              <div className="relative mt-14 extsm:mt-16 sm:mt-8 md:mt-16 lg:!mt-12 xl:mt-16">
                 <input
                   className={
                     data2
@@ -203,7 +203,7 @@ const Login = () => {
         <div className="sml:w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 sml:block">
           <picture>
             <img
-              className="md:!h-screen hidden sm:block lg:block xl:block md:block sm:h-[540px] sml:h-full w-full object-cover"
+              className="md:!h-screen hidden sm:block lg:block xl:block md:block sm:h-[640px] sml:h-full w-full object-cover"
               src="/images/loginimg.webp"
               loading="lazy"
             />

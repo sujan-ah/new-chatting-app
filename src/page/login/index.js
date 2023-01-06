@@ -73,23 +73,23 @@ const Login = () => {
     <div>
       <div className="flex">
         <ToastContainer position="top-left" theme={data2 ? "light" : "dark"} />
-        <div className="sml:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
-          <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
+        <div className="sml:w-1/2 xl:w-1/2  flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0 sm:ml-2 md:ml-10 p-2 sm:p-2 md:p-0">
+          <div className="xl:w-[600px] sm:w-[350px] md:w-[350px] lg:w-[520px] px-2.5 md:px-5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0 ">
             {err && (
               <p className="bg-rose-600 px-4 py-2 rounded-lg mt-2 text-white font-nunito font-semibold text-xl text-center xl:w-2/3">
                 {err}
               </p>
             )}
-            <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start mt-5">
+            <h2 className="font-nunito font-bold text-4xl sm:text-3xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[110px] text-center sm:text-start sml:text-start xl:text-start mt-5 sm:mt-4  lg:mt-0">
               Login to your account!
             </h2>
 
             <div className="xl:w-2/3">
               <button
                 onClick={handleGoogleLogin}
-                className="xl:w-3/5 h-auto flex border px-8 py-5 rounded-lg xl:mt-10 mt-5  ml-auto mr-auto sml:ml-0 sml:mr-0"
+                className="xl:w-3/5 h-auto flex border px-8 sm:px-3 md:px-5 lg:px-5 py-2 xl:py-5 sm:p-2 md:py-2 lg:py-2 rounded-lg mt-5 sm:mt-2 sm:mt-6 lg:mt-10 xl:mt-10  ml-auto xl:ml-0 sm:ml-0 md:ml-0 lg:ml-0 mr-auto sml:ml-0 sml:mr-0"
               >
-                <FcGoogle className="text-2xl" />
+                <FcGoogle className=" text-2xl md:text-2xl lg:text-2xl sm:text-2xl" />
                 <p
                   className={
                     data2
@@ -101,12 +101,12 @@ const Login = () => {
                 </p>
               </button>
 
-              <div className="relative mt-14">
+              <div className="relative mt-14 extsm:mt-16 sm:mt-8 md:mt-16 lg:mt-16 xl:mt-16">
                 <input
                   className={
                     data2
-                      ? "border-b border-solid border-white w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 bg-black"
-                      : "border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                      ? "border-b border-solid border-white w-full  py-4 sm:py-4 md:py-4 lg:py-4 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 bg-black"
+                      : "border-b border-solid border-purpal w-full  py-4 sm:py-4 md:py-4 lg:py-4 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   }
                   type="email"
                   onChange={handleEmail}
@@ -122,12 +122,12 @@ const Login = () => {
                 </p>
               </div>
 
-              <div className="relative mt-14">
+              <div className="relative mt-12  extsm:mt-16 sm:mt-8 md:mt-14">
                 <input
                   className={
                     data2
-                      ? "border-b border-solid border-white w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 bg-black"
-                      : "border-b border-solid border-purpal w-full  py-7 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                      ? "border-b border-solid border-white w-full py-4 sm:py-4 md:py-4 lg:py-4 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 bg-black"
+                      : "border-b border-solid border-purpal w-full py-4 sm:py-4 md:py-4 lg:py-4 sml:py-4 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   }
                   type={eyeopen ? "text" : "password"}
                   onChange={handlePassword}
@@ -145,12 +145,12 @@ const Login = () => {
                 {eyeopen ? (
                   <FiEye
                     onClick={handleEye}
-                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                    className="absolute top-7 right-6 sml:top-7 xl:!top-9"
                   />
                 ) : (
                   <FiEyeOff
                     onClick={handleEye}
-                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                    className="absolute top-7 right-6 sm:top-7 sml:top-7 xl:!top-9"
                   />
                 )}
               </div>
@@ -167,7 +167,7 @@ const Login = () => {
                 </div>
               ) : (
                 <button
-                  className="w-full h-auto bg-primary p-6 rounded-lg mt-12"
+                  className="w-full h-auto bg-primary p-6 sm:p-2 md:p-4 lg:p-4 rounded-lg mt-12 sm:mt-8 md:mt-10 lg:mt-10"
                   onClick={handleLogin}
                 >
                   <p className="font-nunito font-semibold text-white text-xl">
@@ -179,8 +179,8 @@ const Login = () => {
               <p
                 className={
                   data2
-                    ? "px-5 font-semibold mt-9 text-white"
-                    : "px-5 font-semibold mt-9 text-blue"
+                    ? "px-5 font-semibold mt-9 sm:mt-6 xl:mt-8  md:mt-8 lg:mt-8 text-white"
+                    : "px-5 font-semibold mt-9 sm:mt-6 md:mt-8 xl:mt-8 lg:mt-8 text-blue"
                 }
               >
                 Don’t have an account ?
@@ -190,7 +190,7 @@ const Login = () => {
                 </Link>
               </p>
 
-              <p className="px-5 font-semibold mt-9 text-center">
+              <p className="px-5 font-semibold mt-6 sm:mt-2 md:mt-6 lg:mt-4 text-center">
                 <Link to="/forgotpassword" className="text-primary font-bold">
                   {" "}
                   Forgot Password
@@ -200,10 +200,10 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="sml:w-1/2 hidden sml:block">
+        <div className="sml:w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 sml:block">
           <picture>
             <img
-              className="md:!h-screen  sml:h-full w-full object-cover"
+              className="md:!h-screen hidden sm:block lg:block xl:block md:block sm:h-[540px] sml:h-full w-full object-cover"
               src="/images/loginimg.webp"
               loading="lazy"
             />

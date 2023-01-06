@@ -8,7 +8,7 @@ const Darkmood = () => {
   dispatch(darkmood(dark));
 
   return (
-    <div>
+    <div className="mt-0 sm:mt-[-15px] md:mt-0 lg:mt-0">
       <input
         className="dark"
         onChange={() => setDark(!dark)}

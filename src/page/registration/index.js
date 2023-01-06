@@ -147,7 +147,7 @@ const Registration = () => {
     <div>
       <div className="flex">
         <ToastContainer position="top-left" theme={data2 ? "light" : "dark"} />
-        <div className="sml:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
+        <div className="sml:w-1/2 xl:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
           <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
             <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start">
               Get started with easily register
@@ -155,8 +155,8 @@ const Registration = () => {
             <p
               className={
                 data2
-                  ? "font-nunito font-regular text-xl sml:text-base mt-3 text-white opacity-60 text-center sml:text-start"
-                  : "font-nunito font-regular text-xl sml:text-base mt-3 text-purpal opacity-60 text-center sml:text-start"
+                  ? "font-nunito font-regular text-xl sml:text-base mt-3 text-white opacity-60 text-center xl:text-start sml:text-start"
+                  : "font-nunito font-regular text-xl xl:text-start sml:text-base mt-3 text-purpal opacity-60 text-center sml:text-start"
               }
             >
               Free register and you can enjoy it
@@ -296,10 +296,10 @@ const Registration = () => {
           </div>
         </div>
 
-        <div className="sml:w-1/2 hidden sml:block">
+        <div className="sml:w-1/2 xl:w-1/2 hidden xl:block sml:block">
           <picture>
             <img
-              className="md:!h-screen  sml:h-full w-full object-cover"
+              className="md:!h-screen sml:h-full w-full object-cover"
               src="/images/registratiomimg.webp"
               loading="lazy"
             />

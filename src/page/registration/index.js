@@ -147,16 +147,16 @@ const Registration = () => {
     <div>
       <div className="flex">
         <ToastContainer position="top-left" theme={data2 ? "light" : "dark"} />
-        <div className="sml:w-1/2 xl:w-1/2 flex flex-col items-end md:mt-36 lg:mt-20 xl:mt-36 sml:pb-4 md:pb-0">
-          <div className="xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-5 xl:mb-0">
-            <h2 className="font-nunito font-bold text-4xl sml:text-xl md:!text-3xl lg:!text-4xl lg:mr-[69px] text-center sml:text-start">
+        <div className="sml:w-1/2 lg:w-1/2 xl:w-1/2 flex flex-col items-end mt-6 extsm:mt-[3px] sm:!mt-10 md:!mt-36 lg:!mt-32 xl:mt-36 sm:ml-3 md:ml-0 lg:ml-0 xl:ml-0 sml:pb-4 md:pb-0 p-5 sm:p-0 md:p-5 xl:p-0">
+          <div className=" sm:w-[350px] lg:w-[470px] xl:w-[600px] px-2.5 xl:px-0 mt-5 md:mt-0 mb-7 xl:mb-0">
+            <h2 className="font-nunito font-bold text-4xl sm:text-3xl sml:text-xl md:!text-4xl lg:!text-4xl xl:!text-4xl lg:mr-[69px] text-start sml:text-start lg:text-start">
               Get started with easily register
             </h2>
             <p
               className={
                 data2
-                  ? "font-nunito font-regular text-xl sml:text-base mt-3 text-white opacity-60 text-center xl:text-start sml:text-start"
-                  : "font-nunito font-regular text-xl xl:text-start sml:text-base mt-3 text-purpal opacity-60 text-center sml:text-start"
+                  ? "font-nunito font-regular text-xl sm:text-sm sml:text-base md:text-xl mt-3 md:mt-5 text-white opacity-60 text-start lg:text-start xl:text-start sml:text-start"
+                  : "font-nunito font-regular text-xl sm:text-sm xl:text-start sml:text-base md:text-xl mt-3 md:mt-5 text-purpal opacity-60 text-start lg:text-start sml:text-start"
               }
             >
               Free register and you can enjoy it
@@ -168,12 +168,12 @@ const Registration = () => {
                   {err}
                 </p>
               )}
-              <div className="relative mt-8 xl:mt-14">
+              <div className="relative mt-12 md:mt-14">
                 <input
                   className={
                     data2
-                      ? "border border-solid border-white rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
-                      : "border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                      ? "border border-solid border-white rounded-lg w-full px-5 py-4 sm:py-3 sml:py-4 md:py-5 sm:px-5 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
+                      : "border border-solid border-purpal rounded-lg w-full px-5 py-4 sm:py-3 sml:py-4 md:py-5 sm:px-5 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   }
                   type="email"
                   onChange={handleEmail}
@@ -198,8 +198,8 @@ const Registration = () => {
                 <input
                   className={
                     data2
-                      ? "border border-solid border-white rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
-                      : "border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                      ? "border border-solid border-white rounded-lg w-full px-5 py-4 sm:py-3 sml:py-4 md:py-5 sm:px-5 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
+                      : "border border-solid border-purpal rounded-lg w-full px-5 py-4 sm:py-3 sm:px-5 sml:py-4 md:py-5 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   }
                   type="text"
                   onChange={handleName}
@@ -224,8 +224,8 @@ const Registration = () => {
                 <input
                   className={
                     data2
-                      ? "border border-solid border-white rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
-                      : "border border-solid border-purpal rounded-lg w-full px-14 py-7 sml:py-4 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
+                      ? "border border-solid border-white rounded-lg w-full px-5 py-4 sm:py-3 sml:py-4 md:py-5 sm:px-5 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0 text-white bg-black"
+                      : "border border-solid border-purpal rounded-lg w-full px-5 py-4 sm:py-3 sml:py-4 md:py-5 sm:px-5 sml:px-5 xl:!px-8 xl:!py-7 border-opacity-30 font-nunito font-semibold text-2xl outline-0"
                   }
                   type={eyeopen ? "text" : "password"}
                   onChange={handlePassword}
@@ -242,12 +242,12 @@ const Registration = () => {
                 {eyeopen ? (
                   <FiEye
                     onClick={handleEye}
-                    className="absolute top-9 right-6 sml:top-7 xl:!top-9 "
+                    className="absolute top-6 right-6 sm:top-6 sml:top-7 xl:!top-9 "
                   />
                 ) : (
                   <FiEyeOff
                     onClick={handleEye}
-                    className="absolute top-9 right-6 sml:top-7 xl:!top-9"
+                    className="absolute top-6 right-6 sm:top-6 sml:top-7 xl:!top-9"
                   />
                 )}
               </div>
@@ -270,7 +270,7 @@ const Registration = () => {
                 </div>
               ) : (
                 <button
-                  className="w-full h-auto bg-primary p-6 sml:p-4 rounded-full mt-8 xl:mt-12"
+                  className="w-full h-auto bg-primary p-3 sm:p-2 sml:p-4 md:p-4 rounded-full mt-10 md:mt-12"
                   onClick={handleRegistration}
                 >
                   <p className="font-nunito font-semibold text-white text-xl sml:text-base md:!text-xl">
@@ -282,8 +282,8 @@ const Registration = () => {
               <p
                 className={
                   data2
-                    ? " font-semibold text-center mt-5 xl:mt-9 text-white text-sm lg:text-base"
-                    : " font-semibold text-center mt-5 xl:mt-9 text-blue text-sm lg:text-base"
+                    ? " font-semibold text-center mt-7 mb-0 sm:mb-0 sml:mb-0 extsm:mb-[10px] md:mt-9 text-white text-sm lg:text-base"
+                    : " font-semibold text-center mt-7 mb-0 extsm:mb-[10px]sm:mb-0 sml:mb-0 md:mt-9 text-blue text-sm lg:text-base "
                 }
               >
                 Already have an account ?
@@ -296,10 +296,10 @@ const Registration = () => {
           </div>
         </div>
 
-        <div className="sml:w-1/2 xl:w-1/2 hidden xl:block sml:block">
+        <div className="sm:w-1/2 sml:w-1/2 lg:w-1/2 xl:w-1/2 hidden sm:block xl:block sml:block">
           <picture>
             <img
-              className="md:!h-screen sml:h-full w-full object-cover"
+              className="md:!h-screen sm:h-[620px] sml:h-full lg:!h-[900px] xl:!h-screen w-full object-cover"
               src="/images/registratiomimg.webp"
               loading="lazy"
             />

@@ -56,11 +56,11 @@ const Sidebar = ({ active }) => {
   }, []);
 
   return (
-    <div className="flex justify-center xl:block bg-primary px-5 py-5 xl:px-11 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-[430px] sm:w-[750px] md:w-[780px] lg:w-[1040px] xl:w-full ml-[-12px] xl:ml-0">
+    <div className="flex justify-center xl:block bg-primary pr-16 px-5 xl:px-11 py-5 xl:py-10 xl:h-screen overflow-x-hidden overflow-y-hidden	fixed bottom-0 xl:static w-[430px] sm:w-[750px] md:w-[780px] lg:w-[1040px] xl:w-full ml-[-12px] xl:ml-0">
       <div className="relative overflow-hidden w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%] group ">
         <img
           src={auth.currentUser && auth.currentUser.photoURL}
-          className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]"
+          className="w-[60px] md:w-[60px] mr-5 md:mr-0 xl:mr-0 ml-0 md:ml-0 xl:ml-0 xl:w-[100px] xl:h-[100px] rounded-[50%] xl:rounded-[50%]"
         />
         <div
           className="w-[50px] h-[50px] bg-primary flex justify-center items-center absolute bottom-0 right-0 hidden group-hover:flex"
@@ -70,7 +70,7 @@ const Sidebar = ({ active }) => {
         </div>
       </div>
 
-      <h1 className="text-center text-2xl text-white font-nunito font-bold mt-2 leading-6	">
+      <h1 className="text-center text-md md:text-2xl xl:text-2xl text-white font-nunito font-bold mt-2 leading-6 mr-5 md:mr-32 xl:mr-0  md:ml-3">
         {auth.currentUser && auth.currentUser.displayName}
       </h1>
       <div className="flex xl:flex-col items-center gap-x-5 xl:gap-x-0 gap-y-16  xl:mt-20 xl:mb-20 ml-5 xl:ml-0">
@@ -84,8 +84,8 @@ const Sidebar = ({ active }) => {
             <MdOutlineHome
               className={`${
                 active == "home"
-                  ? "text-3xl xl:text-5xl text-white xl:text-primary"
-                  : "text-3xl xl:text-5xl text-white"
+                  ? "text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-white xl:text-primary"
+                  : "text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-white"
               }`}
             />
           </Link>
@@ -101,8 +101,8 @@ const Sidebar = ({ active }) => {
             <TbMessageCircle
               className={`${
                 active == "message"
-                  ? "text-3xl xl:text-5xl text-black"
-                  : "text-3xl  xl:text-5xl text-white"
+                  ? "text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-black"
+                  : "text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-white"
               }`}
             />
           </Link>
@@ -127,8 +127,8 @@ const Sidebar = ({ active }) => {
               onClick={handleNotification}
               className={`${
                 active == "notification"
-                  ? "text-3xl xl:text-5xl text-white xl:text-primary"
-                  : "text-3xl xl:text-5xl text-white"
+                  ? "text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-white xl:text-primary"
+                  : "text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-white"
               }`}
             />
           </Link>
@@ -137,7 +137,7 @@ const Sidebar = ({ active }) => {
         <AiOutlineSetting className="hidden  text-3xl xl:text-5xl text-white " />
         <HiOutlineLogout
           onClick={handleLogout}
-          className="text-3xl xl:text-5xl text-white xl:mt-52"
+          className="text-4xl sm:text-4xl md:text-4xl xl:text-5xl text-white xl:mt-52"
         />
       </div>
     </div>

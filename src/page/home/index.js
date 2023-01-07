@@ -28,19 +28,19 @@ const Home = () => {
   return (
     <>
       {varify ? (
-        <div className="xl:flex justify-between ">
+        <div className="xl:flex justify-between">
           <div className="xl:w-[186px] ">
             <Sidebar active="home" />
           </div>
-          <div className="xl:w-[540px] ">
+          <div className="xl:w-[540px] mb-10 xl:mb-0  p-5 xl:p-0">
             <Group />
             <FriendRequist />
           </div>
-          <div className="xl:w-[540px]">
+          <div className="xl:w-[540px] mb-10 xl:mb-0  p-5 xl:p-0">
             <Friends block="true" />
             <MyGroups />
           </div>
-          <div className="xl:w-[540px]">
+          <div className="xl:w-[540px] mb-10 xl:mb-0  p-5 xl:p-0">
             <UserList />
             <BlockedUsers />
           </div>

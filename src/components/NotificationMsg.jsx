@@ -35,8 +35,8 @@ const NotificationMsg = () => {
     <div
       className={
         data2
-          ? "rounded-2xl p-10 w-full xl:w-[1100px] h-[510px] extsm:h-[500px]  sm:!h-[210px] md:!h-[750px] lg:!h-[500px] xl:!h-[885px] overflow-y-scroll shadow-md shadow-indigo-500/50 mb-10"
-          : "rounded-2xl p-10 w-full xl:w-[1100px] h-[510px] extsm:h-[500px]  sm:!h-[210px] md:!h-[750px] lg:!h-[500px] xl:!h-[885px] overflow-y-scroll shadow-md  mb-10"
+          ? "rounded-2xl p-10 w-full xl:w-[1100px] h-[510px] extsm:h-[500px]  sm:!h-[230px] md:!h-[750px] lg:!h-[500px] xl:!h-[885px] overflow-y-scroll shadow-md shadow-indigo-500/50 mb-10"
+          : "rounded-2xl p-10 w-full xl:w-[1100px] h-[510px] extsm:h-[500px]  sm:!h-[230px] md:!h-[750px] lg:!h-[500px] xl:!h-[885px] overflow-y-scroll shadow-md  mb-10 sm:mb-16"
       }
     >
       {notificationMsg.length == 0 ? (

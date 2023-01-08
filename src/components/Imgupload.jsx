@@ -10,8 +10,10 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { RotatingLines } from "react-loader-spinner";
+import { useSelector } from "react-redux";
 
 const Imgupload = () => {
+  let data2 = useSelector((state) => state.darkmood.value2);
   const navigate = useNavigate();
   const auth = getAuth();
   let [img, setImg] = useState("");
@@ -70,27 +72,31 @@ const Imgupload = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-primary flex justify-center items-center">
-      <div className="w-auto bg-white text-center p-10 rounded-lg">
-        <h1 className="font-nunito text-[55px] font-bold text-primary">
+    <div className="w-full h-screen sm:h-[404px] md:h-screen bg-primary flex justify-center items-center pb-5">
+      <div className="w-auto bg-white text-center p-5 sm:p-6 md:p-5 xl:p-10 rounded-lg mt-5">
+        <h1 className="font-nunito text-[48px] sm:text-[35px] md:text-[48px] lg:text-[48px] xl:text-[55px] font-bold text-primary ">
           Upload Image
         </h1>
 
-        <div className="mt-5 w-full">
+        <div className="mt-5 sm:mt-2 md:mt-5 w-full">
           {viewimg ? (
             <img
               src={viewimg}
-              className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]  mb-5 ml-32"
+              className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]  mb-8 sm:mb-6 md:mb-6 xl:mb-10 ml-4 xl:ml-32"
             />
           ) : (
             <img
               src={auth.currentUser && auth.currentUser.photoURL}
-              className="w-[60px] xl:w-[100px] xl:h-[100px] rounded-[50%]  mb-5 ml-32"
+              className="w-[80px] xl:w-[100px] xl:h-[100px] rounded-[50%]  mb-8 sm:mb-6 md:mb-6 xl:mb-10 ml-4 xl:ml-32"
             />
           )}
 
           <input
-            className="border border-solid border-purpal rounded-lg px-8 py-5 border-opacity-30  outline-0 "
+            className={
+              data2
+                ? "sm:w-[230px] md:w-[310px] xl:w-[350px] border border-solid border-purpal rounded-lg px-2 xl:px-8 py-2 xl:py-5 border-opacity-30 text-black outline-0 "
+                : "sm:w-[230px] md:w-[310px] xl:w-[350px] border border-solid border-purpal rounded-lg px-2 xl:px-8 py-2 xl:py-5 border-opacity-30 text-black outline-0 "
+            }
             type="file"
             onChange={handleChange}
           />
@@ -115,9 +121,9 @@ const Imgupload = () => {
           />
         )}
 
-        <div className="flex justify-between">
+        <div className="flex xl:justify-between">
           {loader ? (
-            <div className="mt-12 ml-36">
+            <div className="mt-2 xl:mt-12 ml-5 xl:ml-36">
               <RotatingLines
                 strokeColor="grey"
                 strokeWidth="5"
@@ -129,16 +135,16 @@ const Imgupload = () => {
           ) : (
             <>
               <button
-                className="w-44 h-auto bg-primary p-6 rounded-lg mt-12"
+                className="xl:w-44 xl:h-auto bg-primary xl:p-6 p-2 rounded-lg mt-8 sm:mt-6 md:mt-8  xl:ml-0"
                 onClick={handleUpload}
               >
-                <p className="font-nunito font-semibold text-white text-xl">
-                  Upload Image
+                <p className="font-nunito font-semibold text-white text-xl sm:text-base md:text-xl">
+                  Upload
                 </p>
               </button>
 
-              <button className="w-40 h-auto bg-amber-600	 p-6 rounded-lg mt-12">
-                <p className="font-nunito font-semibold text-white text-xl">
+              <button className="xl:w-40 h-auto bg-amber-600 p-2 xl:p-6 rounded-lg mt-8 md:mt-8 sm:mt-6 ml-4 xl:ml-0">
+                <p className="font-nunito font-semibold text-white text-xl sm:text-base md:text-xl">
                   <Link to="/" className="text-white font-bold ">
                     {" "}
                     Cancel
